@@ -10,22 +10,18 @@ public class Player {
 
 
     public Player() {
-        System.out.print("Enter your name : ");
-        this.name = read.nextLine();
-        System.out.println("hello " + name + "\n" + "Welcome to the BuzzGame.");
+        this.name = name;
         this.points = 0;
         this.wins = 0;
-        getName();
+        //BuzzDok p = new BuzzDok();
     }
 
     public String getName() { return this.name; }
 
+    public void setName(String name) { this.name = name; }
+
     public int getPoints() { return this.points; }
 
-    /**
-     *Μία μέθοδος η οποία ανήκει στην κλάσση player η οποία αυξάνει και μειώνει κατάλληλα τους πόντους του παίχτη
-     ανάλογα με το αν έχει απαντήσει σωστά ή λάθος στην ερώτηση
-     */
     public int addPoints(int point) {
         return this.points += point;
     }
