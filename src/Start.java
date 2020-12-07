@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Start {
     private JButton player1;
@@ -9,6 +12,7 @@ public class Start {
     private JTextField text2;
 
     private JFrame frame;
+    private JPanel panel;
 
     public void Game() {
         frame = new JFrame();
@@ -18,13 +22,44 @@ public class Start {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
+        panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEADING));
+        panel.setBackground(Color.BLACK);
+        frame.add(panel , BorderLayout.PAGE_START);
+
         player1 = new JButton("Singleplayer");
+        player1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.remove(player1);
+                panel.remove(player2);
+                panel.add(submit);
+                panel.add(text1);
+            }
+        });
         player2 = new JButton("Multiplayer");
+        player2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.remove(player1);
+                panel.remove(player2);
+                panel.add(submit);
+                panel.add(text1);
+                panel.add(text2);
+            }
+        });
         submit = new JButton("Submit");
+        submit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
         text1 = new JTextField();
         text2 = new JTextField();
 
-
+        panel.add(player1);
+        panel.add(player2);
     }
 }
