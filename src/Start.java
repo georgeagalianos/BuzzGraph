@@ -14,6 +14,9 @@ public class Start {
     private JFrame frame;
     private JPanel panel;
 
+    private Player pl1;
+    private Player pl2;
+
     public void Game() {
         frame = new JFrame();
         frame.setTitle("Επιλογή παικτών");
@@ -35,6 +38,7 @@ public class Start {
                 panel.remove(player2);
                 panel.add(submit);
                 panel.add(text1);
+                pl1 = new Player();
             }
         });
         player2 = new JButton("Multiplayer");
@@ -46,6 +50,8 @@ public class Start {
                 panel.add(submit);
                 panel.add(text1);
                 panel.add(text2);
+                pl1 = new Player();
+                pl2 = new Player();
             }
         });
         submit = new JButton("Submit");
@@ -61,5 +67,9 @@ public class Start {
 
         panel.add(player1);
         panel.add(player2);
+    }
+
+    public static void main(String[] args) {
+
     }
 }
