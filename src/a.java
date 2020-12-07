@@ -87,4 +87,8 @@ public class a {
         f.add(button2);
         f.setVisible(true);
     }
+
+    public static void main(String[] args) {
+        a a = new a();
+    }
 }
