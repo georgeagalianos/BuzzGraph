@@ -18,13 +18,16 @@ public class a {
 
     private JTextField name1;
     private JTextField name2;
-    private  JTextField rounds;
+    private JTextField text;
 
-    Player pl1;
-    Player pl2;
+    private Player pl1;
+    private Player pl2;
 
-    String pl_name1;
-    String pl_name2;
+    private String pl_name1;
+    private String pl_name2;
+    private String rounds;
+    private String quests;
+
 
 
     public a() {
@@ -59,22 +62,7 @@ public class a {
             }
         });
 
-        enter = new JButton("submit");
-        enter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                name1.setVisible(false);
-                name2.setVisible(false);
-                enter.setVisible(false);
-                pl_name1 = name1.getText();
-                pl_name2 = name2.getText();
-                //p.setVisible(false);
-                System.out.println(pl_name1);
-                System.out.println(pl_name2);
 
-                rounds();
-            }
-        });
 
         name1 = new JTextField("pl1 name");
         name2 = new JTextField("pl2 name");
@@ -93,6 +81,26 @@ public class a {
     public void single() {
         button1.setVisible(false);
         button2.setVisible(false);
+
+        enter = new JButton("submit");
+        enter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                name1.setVisible(false);
+                name2.setVisible(false);
+                enter.setVisible(false);
+                pl_name1 = name1.getText();
+                pl1 = new Player();
+                pl1.setName(pl_name1);
+                //pl_name2 = name2.getText();
+                //p.setVisible(false);
+                System.out.println(pl_name1);
+                //System.out.println(pl_name2);
+
+
+                rounds();
+            }
+        });
 
         GridBagLayout l = new GridBagLayout();
         p.setLayout(l);
@@ -115,6 +123,29 @@ public class a {
         button1.setVisible(false);
         button2.setVisible(false);
 
+        enter = new JButton("submit");
+        enter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                name1.setVisible(false);
+                name2.setVisible(false);
+                enter.setVisible(false);
+                pl_name1 = name1.getText();
+                pl_name2 = name2.getText();
+                pl1 = new Player();
+                pl1.setName(pl_name1);
+                pl2 = new Player();
+                pl2.setName(pl_name2);
+                //p.setVisible(false);
+                System.out.println(pl1.getName());
+                System.out.println(pl2.getName());
+                //System.out.println(pl_name2);
+
+
+                rounds();
+            }
+        });
+
         GridBagLayout l = new GridBagLayout();
         p.setLayout(l);
         GridBagConstraints l2 = new GridBagConstraints();
@@ -133,16 +164,17 @@ public class a {
     }
 
     public void rounds() {
-        rounds = new JTextField("How many rounds do you want;");
+        text = new JTextField("How many rounds do you want;");
         enter = new JButton("submit");
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("asdasdasda");
-                rounds.setVisible(false);
+                rounds = text.getText();
+                text.setVisible(false);
                 enter.setVisible(false);
+                System.out.println(rounds);
 
-                questions();
+                questionsR();
             }
         });
 
@@ -153,7 +185,7 @@ public class a {
         l2.gridx = 0;
         l2.gridy = 1;
         l2.gridwidth = 2;
-        p.add(rounds , l2);
+        p.add(text , l2);
 
         l2.gridx = 0;
         l2.gridy = 2;
@@ -161,13 +193,14 @@ public class a {
         p.add(enter , l2);
     }
 
-    public void questions() {
-        rounds = new JTextField("how many questions per round;");
+    public void questionsR() {
+        text = new JTextField("how many questions per round;");
         enter = new JButton("submit");
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("georgeeee");
+                quests = text.getText();
+                System.out.println(quests);
             }
         });
 
@@ -178,7 +211,7 @@ public class a {
         l2.gridx = 0;
         l2.gridy = 1;
         l2.gridwidth = 2;
-        p.add(rounds , l2);
+        p.add(text , l2);
 
         l2.gridx = 0;
         l2.gridy = 2;
