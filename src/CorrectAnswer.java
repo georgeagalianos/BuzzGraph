@@ -1,10 +1,23 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class CorrectAnswer {
+public class CorrectAnswer{
     private Player player;
     private int number_rounds;
     private int number_questRound;
+
+    private JFrame frame;
+    private JPanel panel;
+
+    private JButton b1;
+    private JButton b2;
+    private JButton b3;
+    private JButton b4;
+
+    private JLabel label;
+
 
     /**
      *
@@ -16,7 +29,35 @@ public class CorrectAnswer {
         this.player = player;
         this.number_rounds = number_rounds;
         this.number_questRound = number_questRound;
-        Game();
+        Call();
+    }
+
+    private void Call() {
+        frame = new JFrame();
+        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setSize(500,300);
+
+        panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panel.setBackground(Color.CYAN);
+        frame.add(panel , BorderLayout.CENTER);
+
+        b1 = new JButton();
+        b2 = new JButton();
+        b3 = new JButton();
+        b4 = new JButton();
+
+        label = new JLabel();
+
+        panel.add(b1);
+        panel.add(b2);
+        panel.add(b3);
+        panel.add(b4);
+        panel.add(label);
+
+        frame.setVisible(true);
+        panel.setVisible(true);
     }
 
     private void Game() {

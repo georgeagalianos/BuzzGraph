@@ -25,8 +25,8 @@ public class a {
 
     private String pl_name1;
     private String pl_name2;
-    private String rounds;
-    private String quests;
+    private int rounds;
+    private int quests;
 
 
 
@@ -169,7 +169,7 @@ public class a {
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                rounds = text.getText();
+                rounds = Integer.parseInt(text.getText());
                 text.setVisible(false);
                 enter.setVisible(false);
                 System.out.println(rounds);
@@ -199,8 +199,10 @@ public class a {
         enter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                quests = text.getText();
+                quests = Integer.parseInt(text.getText());
                 System.out.println(quests);
+                //f.setVisible(false);
+                //CorrectAnswer game = new CorrectAnswer(pl1 , rounds , quests);
             }
         });
 
