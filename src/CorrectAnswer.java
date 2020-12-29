@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,7 +26,8 @@ public class CorrectAnswer{
      * @param number_rounds
      * @param number_questRound
      */
-    public CorrectAnswer(Player player, int number_rounds, int number_questRound) {
+    public CorrectAnswer(Player player, int number_rounds, int number_questRound) throws IOException {
+        //super();
         this.player = player;
         this.number_rounds = number_rounds;
         this.number_questRound = number_questRound;
@@ -34,14 +36,18 @@ public class CorrectAnswer{
 
     private void Call() {
         frame = new JFrame();
+        frame = new JFrame("Επιλογη παικτων");
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.setSize(500,300);
+        frame.setSize(800,500);
+
+
 
         panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.CENTER));
         panel.setBackground(Color.CYAN);
         frame.add(panel , BorderLayout.CENTER);
+        //super.frameReturn().add(panel , BorderLayout.CENTER);
 
         b1 = new JButton();
         b2 = new JButton();
@@ -56,8 +62,8 @@ public class CorrectAnswer{
         panel.add(b4);
         panel.add(label);
 
-        frame.setVisible(true);
-        panel.setVisible(true);
+        //frame.setVisible(true);
+        //panel.setVisible(true);
     }
 
     private void Game() {
