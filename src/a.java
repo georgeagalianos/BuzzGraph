@@ -216,11 +216,11 @@ public class a {
                 System.out.println(quests);
                 f.setVisible(false);
                 p.setVisible(false);
-                try {
-                    CorrectAnswer game = new CorrectAnswer(pl1 , rounds , quests);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+//                try {
+//                    CorrectAnswer game = new CorrectAnswer(pl1 , rounds , quests);
+//                } catch (IOException ioException) {
+//                    ioException.printStackTrace();
+//                }
             }
         });
 
