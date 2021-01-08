@@ -18,22 +18,24 @@ public class Question {
         Collections.shuffle(answers);
     }
 
-    public void printQuestion() {
-        System.out.println(this.question);
+    public String printQuestion() {
+//        System.out.println(this.question);
+        return this.question;
     }
 
     public void printCategory() {
         System.out.println(this.category);
     }
 
-    public void printAnswers() {
+    public ArrayList<String> printAnswers() {
         shuffleAnswers();
-        int counter = 1;
-
-        for(int k=0 ; k<this.answers.size() ; k++) {
-            System.out.println(counter + "." + answers.get(k));
-            counter++;
-        }
+//        int counter = 1;
+//
+//        for(int k=0 ; k<this.answers.size() ; k++) {
+//            System.out.println(counter + "." + answers.get(k));
+//            counter++;
+//        }
+        return answers;
     }
 
     public int getCorrectAnswer() {
