@@ -19,29 +19,20 @@ public class BET  {
     Scanner console = new Scanner(System.in);
     private Player player;
     private final int number_rounds,number_questions,points=0;
-    private int bider,currentAnswer,roundCounter,questionCounter;
-
-    private boolean flag1,flag2;
-    private int keysingl,key2,keybet;
-
-    //##################GRAFIKA################
-    private JFrame frame;
-
-    private JLabel photo,round,question,lbet,bet1,bet2,bet3,bet4,ans1,ans2,ans3,ans4;
-
-    private ImageIcon img;
-
+    private int bider,currentAnswer,roundCounter,questionCounter,keybet,keysingl,key2;
 
     private String currentQ;
 
     private Question currentQuestion;
     private ArrayList<String> answers;
 
-    private JTextField text1,text2;
+    private boolean flag1,flag2;
 
-    private JLabel CorrectA;
-    private JLabel row_question;
+    private JFrame frame;
 
+    private JLabel photo,round,question,lbet,bet1,bet2,bet3,bet4,ans1,ans2,ans3,ans4,CorrectA,row_question,score;
+
+    private ImageIcon img;
 
     public BET(Player player, int numRounds, int numQuestions)throws IOException,InterruptedException{
         this.player = player;
@@ -62,7 +53,6 @@ public class BET  {
         frame.add(photo);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
-        //################################################
 
         round = new JLabel();
         question = new JLabel();
@@ -75,7 +65,7 @@ public class BET  {
         ans2=new JLabel();
         ans3=new JLabel();
         ans4=new JLabel();
-
+        score=new JLabel();
 
         CorrectA=new JLabel();
 
@@ -93,16 +83,12 @@ public class BET  {
         Questions questions = new Questions();
         ArrayList<Question> roundQuestions;
 
-        //Scanner scanner = new Scanner(System.in);
-        //int currentAnswer;
-        //Question currentQuestion = null;
         roundCounter = 1;
         System.out.println("round");
         for(int i=0 ; i<number_rounds ; i++) {
             roundQuestions = questions.getQuestions(number_questions);
 
             frame.setVisible(true);
-            //photo.setVisible(true);
             //###############EMFANISEI ROUND##########################
             round.setText("Round: " + roundCounter);
             round.setBounds(360 , 20 , 200 , 30);
@@ -121,7 +107,7 @@ public class BET  {
                 flag2 = false;
                 keysingl = 0;
                 keybet=0;
-                key2 = 0;
+                key2=0;
                 //###############EMFANIzEI ARITHMO ERVTHSEIS##########################
                 question.setText("Question: " + questionCounter);
                 question.setBounds(350 , 50 , 200 , 30);
@@ -251,7 +237,6 @@ public class BET  {
                 photo.remove(row_question);
                 photo.updateUI();
 
-
                 frame.addKeyListener(new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {}
@@ -281,6 +266,15 @@ public class BET  {
             photo.updateUI();
 
         }
+        score.setText("Your scor:" + player.getPoints());
+        score.setBounds(350 , 200 , 200 , 30);
+        score.setForeground(Color.black);
+        score.setFont(new Font("SCORE" , Font.PLAIN , 25));
+        photo.add(score);
+        photo.updateUI();
+        TimeUnit.SECONDS.sleep(5);
+        photo.remove(score);
+        photo.updateUI();
         System.out.println("Your scor : " + player.getPoints());
     }
     public static void main(String[] args) throws IOException, InterruptedException {
