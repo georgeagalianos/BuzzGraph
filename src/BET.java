@@ -17,9 +17,9 @@ import java.util.concurrent.TimeUnit;
 
 public class BET  {
     Scanner console = new Scanner(System.in);
-    private Player player;
+    private Player player1,player2;
     private final int number_rounds,number_questions,points=0;
-    private int bider,currentAnswer,roundCounter,questionCounter,keybet,keysingl,key2;
+    private int bider,currentAnswer,roundCounter,questCounter,questionCounter,keybet,keysingl,keymulti,key1,key2,keybet1,keybet2;
 
     private String currentQ;
 
@@ -30,12 +30,13 @@ public class BET  {
 
     private JFrame frame;
 
-    private JLabel photo,round,question,lbet,bet1,bet2,bet3,bet4,ans1,ans2,ans3,ans4,CorrectA,row_question,score;
+    private JLabel photo,round,question,lbet,bet1,bet2,bet3,bet4,ans1,ans2,ans3,ans4,CorrectA,row_question,control1,control2,score1,score2;
 
     private ImageIcon img;
 
-    public BET(Player player, int numRounds, int numQuestions)throws IOException,InterruptedException{
-        this.player = player;
+    public BET(Player player1,Player player2, int numRounds, int numQuestions)throws IOException,InterruptedException{
+        this.player1 = player1;
+        this.player2 = player2;
         this.number_rounds = numRounds;
         this.number_questions = numQuestions;
         Call();
@@ -65,7 +66,10 @@ public class BET  {
         ans2=new JLabel();
         ans3=new JLabel();
         ans4=new JLabel();
-        score=new JLabel();
+        score1=new JLabel();
+        score2=new JLabel();
+        control1=new JLabel();
+        control2=new JLabel();
 
         CorrectA=new JLabel();
 
@@ -75,16 +79,36 @@ public class BET  {
         Questions questions = new Questions();
         ArrayList<Question> roundQuestions;
 
-        Game();
+        Gamesingl();
+        //Gamemulti();
     }
 
 
-    private void Game()throws InterruptedException {
+    private void Gamesingl()throws InterruptedException {
         Questions questions = new Questions();
         ArrayList<Question> roundQuestions;
-
         roundCounter = 1;
-        System.out.println("round");
+        //#####################CONTROLER######################
+        control1.setText("CONTROL PL1:1 2 3 4");
+        control1.setBounds(350, 190, 200, 30);
+        control1.setForeground(Color.BLACK);
+        control1.setFont(new Font("CONTROL", Font.PLAIN, 17));
+        photo.add(control1);
+        photo.updateUI();
+        if (player2 != null){
+            control2.setText("CONTROL PL2:6 7 8 9");
+            control2.setBounds(350, 220, 200, 30);
+            control2.setForeground(Color.BLACK);
+            control2.setFont(new Font("CONTROL", Font.PLAIN, 17));
+            photo.add(control2);
+        }
+        frame.setVisible(true);
+        TimeUnit.SECONDS.sleep(3);
+        photo.updateUI();
+        photo.remove(control1);
+        photo.remove(control2);
+        photo.updateUI();
+        //####################################################
         for(int i=0 ; i<number_rounds ; i++) {
             roundQuestions = questions.getQuestions(number_questions);
 
@@ -99,26 +123,25 @@ public class BET  {
             photo.updateUI();
             roundCounter ++;
             //###############################################
-            int questCounter = 1;
+            questCounter = 1;
             for(int j=0 ; j<number_questions ; j++) {
 
                 //#####################BET#################################################
-                flag1 = false;
-                flag2 = false;
                 //###############EMFANIzEI ARITHMO ERVTHSEIS##########################
-                question.setText("Question: " + questionCounter);
+                question.setText("Question: " + questCounter);
                 question.setBounds(350 , 50 , 200 , 30);
                 question.setForeground(Color.black);
                 question.setFont(new Font("QUEST" , Font.PLAIN , 25));
                 photo.add(question);
                 photo.updateUI();
-                photo.remove(question);photo.updateUI();
-                questionCounter ++;
+                //photo.remove(question);
+                //photo.updateUI();
+                questCounter ++;
                 //###############################################
                 //###################DIEYKRINISEIS################
-                lbet.setText("YOU HAVE FOR BATE:");
+                lbet.setText("YOU HAVE FOR BID PLAYER1:");
                 lbet.setBounds(330,170,800,50);
-                lbet.setFont(new Font("" , Font.PLAIN , 22));
+                lbet.setFont(new Font("" , Font.PLAIN , 20));
                 lbet.setForeground(Color.black);
                 photo.add(lbet);
                 photo.updateUI();
@@ -126,25 +149,25 @@ public class BET  {
                 bet1.setText("1=250" );
                 bet1.setBounds(350 , 210 , 300 , 30);
                 bet1.setForeground(Color.BLACK);
-                bet1.setFont(new Font("BET" , Font.PLAIN , 20));
+                bet1.setFont(new Font("BID" , Font.PLAIN , 25));
                 photo.add(bet1);
 
                 bet2.setText("2=500 ");
                 bet2.setBounds(450 , 210 , 300 , 30);
                 bet2.setForeground(Color.black);
-                bet2.setFont(new Font("BET" , Font.PLAIN , 20));
+                bet2.setFont(new Font("BID" , Font.PLAIN , 25));
                 photo.add(bet2);
 
                 bet3.setText("3=750 ");
                 bet3.setBounds(350 , 260 , 300 , 30);
                 bet3.setForeground(Color.black);
-                bet3.setFont(new Font("BET" , Font.PLAIN , 20));
+                bet3.setFont(new Font("BID" , Font.PLAIN , 25));
                 photo.add(bet3);
 
                 bet4.setText("4=1000 ");
                 bet4.setBounds(450 , 260 , 300 , 30);
                 bet4.setForeground(Color.black);
-                bet4.setFont(new Font("BET" , Font.PLAIN , 20));
+                bet4.setFont(new Font("BID" , Font.PLAIN , 25));
                 photo.add(bet4);
                 photo.updateUI();
                 TimeUnit.SECONDS.sleep(1);
@@ -158,17 +181,17 @@ public class BET  {
                 //##################BET###############################
                 //while (flag1==false){
                 //do{
-                keybet=0;
+                keybet1=0;
                 frame.addKeyListener(new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {}
                     public void keyPressed(KeyEvent e) {
-                        keybet = e.getKeyCode();
+                        keybet1 = e.getKeyCode();
                     }
                     @Override
                     public void keyReleased(KeyEvent e) {}
                 });
-                while (keybet == 0 ) {
+                while (keybet1 == 0 ) {
                     TimeUnit.SECONDS.sleep(1);
                 }
                 photo.remove(bet1);
@@ -177,21 +200,91 @@ public class BET  {
                 photo.remove(bet4);
                 photo.remove(lbet);
                 photo.updateUI();
-                if (keybet==49) {
-                    player.setBid(250);
+                if (keybet1==49) {
+                    player1.setBid(250);
                 }
-                else if (keybet==50) {
-                    player.setBid(500);
+                else if (keybet1==50) {
+                    player1.setBid(500);
                 }
-                else if (keybet==51) {
-                    player.setBid(750);
+                else if (keybet1==51) {
+                    player1.setBid(750);
                 }
                 else
-                if(keybet==52) {
-                    player.setBid(1000);
+                if(keybet1==52) {
+                    player1.setBid(1000);
                 }
                 //}//while (key2!=0);
-                //#######################################
+                //############################################
+                //####################PLAYER2########################################
+                if (player2!=null){
+                    lbet.setText("YOU HAVE FOR BID PLAYER2:");
+                    lbet.setBounds(330,170,800,50);
+                    lbet.setFont(new Font("" , Font.PLAIN , 20));
+                    lbet.setForeground(Color.black);
+                    photo.add(lbet);
+                    photo.updateUI();
+
+                    bet1.setText("6=250");
+                    bet1.setBounds(350 , 210 , 300 , 30);
+                    bet1.setForeground(Color.BLACK);
+                    bet1.setFont(new Font("BID" , Font.PLAIN , 25));
+                    photo.add(bet1);
+
+                    bet2.setText("7=500 ");
+                    bet2.setBounds(450 , 210 , 300 , 30);
+                    bet2.setForeground(Color.black);
+                    bet2.setFont(new Font("BID" , Font.PLAIN , 25));
+                    photo.add(bet2);
+
+                    bet3.setText("8=750 ");
+                    bet3.setBounds(350 , 260 , 300 , 30);
+                    bet3.setForeground(Color.black);
+                    bet3.setFont(new Font("BID" , Font.PLAIN , 25));
+                    photo.add(bet3);
+
+                    bet4.setText("9=1000 ");
+                    bet4.setBounds(450 , 260 , 300 , 30);
+                    bet4.setForeground(Color.black);
+                    bet4.setFont(new Font("BID" , Font.PLAIN , 25));
+                    photo.add(bet4);
+                    photo.updateUI();
+                    TimeUnit.SECONDS.sleep(1);
+                    //while (flag1==false){
+                    //do{
+                    keybet2=0;
+                    frame.addKeyListener(new KeyListener() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {}
+                        public void keyPressed(KeyEvent e) {
+                            keybet2 = e.getKeyCode();
+                        }
+                        @Override
+                        public void keyReleased(KeyEvent e) {}
+                    });
+                    while (keybet2 == 0 ) {
+                        TimeUnit.SECONDS.sleep(1);
+                    }
+                    photo.remove(bet1);
+                    photo.remove(bet2);
+                    photo.remove(bet3);
+                    photo.remove(bet4);
+                    photo.remove(lbet);
+                    photo.updateUI();
+                    if (keybet2==54) {
+                        player2.setBid(250);
+                    }
+                    else if (keybet2==55) {
+                        player2.setBid(500);
+                    }
+                    else if (keybet2==56) {
+                        player2.setBid(750);
+                    }
+                    else
+                    if(keybet2==57) {
+                        player2.setBid(1000);
+                    }
+                }
+                //###################################################################
                 //######################################################################
 
                 //###################ERVTHSHS KAI APANTHSEIS####################
@@ -237,7 +330,7 @@ public class BET  {
 //                photo.remove(row_question);
 //                photo.updateUI();
                 keysingl=0;
-                key2=0;
+                key1=0;
                 frame.addKeyListener(new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {}
@@ -256,41 +349,127 @@ public class BET  {
                 photo.remove(ans2);
                 photo.remove(ans3);
                 photo.remove(ans4);
-                photo.remove(row_question);
+                //photo.remove(row_question);
                 photo.updateUI();
-                key2=keysingl-48;
+                key1=keysingl-48;
                 System.out.println(key2);
-                if(key2 == currentQuestion.getCorrectAnswer()) {
-                    player.addPoints(player.getBid());
+                if(key1 == currentQuestion.getCorrectAnswer()) {
+                    player1.addPoints(player1.getBid());
                 }
 
                 if(currentAnswer == currentQuestion.getCorrectAnswer()) {
-                    player.addPoints(player.getBid());
+                    player1.addPoints(player1.getBid());
                 }
-                else if(key2 != currentQuestion.getCorrectAnswer()) {
-                    player.addPoints(-player.getBid());
+                else if(key1 != currentQuestion.getCorrectAnswer()) {
+                    player1.addPoints(-player1.getBid());
                 }
+                //#################################PLAYER2###########################################
+                if (player2!=null){
+                    ans1.setText("6 :" + answers.get(0));
+                    ans1.setBounds(150 , 210 , 300 , 30);
+                    ans1.setForeground(Color.CYAN);
+                    ans1.setFont(new Font("ANS" , Font.PLAIN , 20));
+                    photo.add(ans1);
+
+                    ans2.setText("7 : " + answers.get(1));
+                    ans2.setBounds(500 , 210 , 300 , 30);
+                    ans2.setForeground(Color.CYAN);
+                    ans2.setFont(new Font("ANS" , Font.PLAIN , 20));
+                    photo.add(ans2);
+
+                    ans3.setText("8 : " + answers.get(2));
+                    ans3.setBounds(150 , 260 , 300 , 30);
+                    ans3.setForeground(Color.CYAN);
+                    ans3.setFont(new Font("ANS" , Font.PLAIN , 20));
+                    photo.add(ans3);
+
+                    ans4.setText("9 : " + answers.get(3));
+                    ans4.setBounds(500 , 260 , 300 , 30);
+                    ans4.setForeground(Color.CYAN);
+                    ans4.setFont(new Font("ANS" , Font.PLAIN , 20));
+                    photo.add(ans4);
+                    photo.updateUI();
+                    TimeUnit.SECONDS.sleep(1);
+//                photo.remove(ans1);
+//                photo.remove(ans2);
+//                photo.remove(ans3);
+//                photo.remove(ans4);
+//                photo.remove(row_question);
+//                photo.updateUI();
+                    keymulti=0;
+                    key2=0;
+                    frame.addKeyListener(new KeyListener() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {}
+                        @Override
+                        public void keyPressed(KeyEvent e) {
+                            keymulti = e.getKeyCode();
+                            System.out.println(keymulti);
+                        }
+                        @Override
+                        public void keyReleased(KeyEvent e) {}
+                    });
+                    while (keymulti == 0 ) {
+                        TimeUnit.SECONDS.sleep(1);
+                    }
+                    photo.remove(ans1);
+                    photo.remove(ans2);
+                    photo.remove(ans3);
+                    photo.remove(ans4);
+                    photo.remove(row_question);
+                    photo.updateUI();
+                    key2=keymulti-48;
+                    System.out.println(key2);
+                    if(key2 == currentQuestion.getCorrectAnswer()) {
+                        player2.addPoints(player2.getBid());
+                    }
+
+                    if(currentAnswer == currentQuestion.getCorrectAnswer()) {
+                        player2.addPoints(player2.getBid());
+                    }
+                    else if(key2 != currentQuestion.getCorrectAnswer()) {
+                        player2.addPoints(-player2.getBid());
+                    }
+                }
+                //###################################################################################
                 //##################################################################################
+                photo.remove(question);
+                photo.updateUI();
+
             }
             photo.removeAll();
             photo.updateUI();
 
         }
-        score.setText("Your scor:" + player.getPoints());
-        score.setBounds(350 , 200 , 200 , 30);
-        score.setForeground(Color.black);
-        score.setFont(new Font("SCORE" , Font.PLAIN , 25));
-        photo.add(score);
+        score1.setText(player1.getName()+" scor:" + player1.getPoints());
+        score1.setBounds(350 , 200 , 200 , 30);
+        score1.setForeground(Color.black);
+        score1.setFont(new Font("SCORE" , Font.PLAIN , 20));
+        photo.add(score1);
         photo.updateUI();
         TimeUnit.SECONDS.sleep(5);
-        photo.remove(score);
+        photo.remove(score1);
         photo.updateUI();
-        System.out.println("Your scor : " + player.getPoints());
+        if (player2!=null){
+            score2.setText(player2.getName()+" scor:" + player1.getPoints());
+            score2.setBounds(350 , 200 , 200 , 30);
+            score2.setForeground(Color.black);
+            score2.setFont(new Font("SCORE" , Font.PLAIN , 20));
+            photo.add(score2);
+            photo.updateUI();
+            TimeUnit.SECONDS.sleep(5);
+            photo.remove(score2);
+            photo.updateUI();
+        }
     }
-    public static void main(String[] args) throws IOException, InterruptedException {
+
+        public static void main(String[] args) throws IOException, InterruptedException {
         Player pl1 = new Player();
-        pl1.setName("george");
-        new BET(pl1 ,1 , 3);
+        Player pl2 = new Player();
+        pl1.setName("nik");
+        pl2.setName("george");
+        //new BET(pl1 ,null,1 , 3);
+        new BET(pl1 ,pl2,1 , 3);
     }
 
 }
