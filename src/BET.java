@@ -105,9 +105,6 @@ public class BET  {
                 //#####################BET#################################################
                 flag1 = false;
                 flag2 = false;
-                keysingl = 0;
-                keybet=0;
-                key2=0;
                 //###############EMFANIzEI ARITHMO ERVTHSEIS##########################
                 question.setText("Question: " + questionCounter);
                 question.setBounds(350 , 50 , 200 , 30);
@@ -115,7 +112,7 @@ public class BET  {
                 question.setFont(new Font("QUEST" , Font.PLAIN , 25));
                 photo.add(question);
                 photo.updateUI();
-                photo.remove(question);
+                photo.remove(question);photo.updateUI();
                 questionCounter ++;
                 //###############################################
                 //###################DIEYKRINISEIS################
@@ -129,41 +126,39 @@ public class BET  {
                 bet1.setText("1=250" );
                 bet1.setBounds(350 , 210 , 300 , 30);
                 bet1.setForeground(Color.BLACK);
-                bet1.setFont(new Font("ANS" , Font.PLAIN , 20));
+                bet1.setFont(new Font("BET" , Font.PLAIN , 20));
                 photo.add(bet1);
 
                 bet2.setText("2=500 ");
                 bet2.setBounds(450 , 210 , 300 , 30);
                 bet2.setForeground(Color.black);
-                bet2.setFont(new Font("ANS" , Font.PLAIN , 20));
+                bet2.setFont(new Font("BET" , Font.PLAIN , 20));
                 photo.add(bet2);
 
                 bet3.setText("3=750 ");
                 bet3.setBounds(350 , 260 , 300 , 30);
                 bet3.setForeground(Color.black);
-                bet3.setFont(new Font("ANS" , Font.PLAIN , 20));
+                bet3.setFont(new Font("BET" , Font.PLAIN , 20));
                 photo.add(bet3);
 
                 bet4.setText("4=1000 ");
                 bet4.setBounds(450 , 260 , 300 , 30);
                 bet4.setForeground(Color.black);
-                bet4.setFont(new Font("ANS" , Font.PLAIN , 20));
+                bet4.setFont(new Font("BET" , Font.PLAIN , 20));
                 photo.add(bet4);
                 photo.updateUI();
-                TimeUnit.SECONDS.sleep(5);
-                photo.remove(bet1);
-                photo.remove(bet2);
-                photo.remove(bet3);
-                photo.remove(bet4);
-                photo.remove(lbet);
-                photo.updateUI();
-
+                TimeUnit.SECONDS.sleep(1);
+//                photo.remove(bet1);
+//                photo.remove(bet2);
+//                photo.remove(bet3);
+//                photo.remove(bet4);
+ //               photo.remove(lbet);
+ //               photo.updateUI();
                 //####################################################
-
                 //##################BET###############################
-
                 //while (flag1==false){
                 //do{
+                keybet=0;
                 frame.addKeyListener(new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {}
@@ -173,6 +168,15 @@ public class BET  {
                     @Override
                     public void keyReleased(KeyEvent e) {}
                 });
+                while (keybet == 0 ) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                photo.remove(bet1);
+                photo.remove(bet2);
+                photo.remove(bet3);
+                photo.remove(bet4);
+                photo.remove(lbet);
+                photo.updateUI();
                 if (keybet==49) {
                     player.setBid(250);
                 }
@@ -187,12 +191,8 @@ public class BET  {
                     player.setBid(1000);
                 }
                 //}//while (key2!=0);
-                // photo.removeAll();
-                // photo.updateUI();
-
                 //#######################################
                 //######################################################################
-
 
                 //###################ERVTHSHS KAI APANTHSEIS####################
                 currentQuestion = roundQuestions.get(j);
@@ -229,14 +229,15 @@ public class BET  {
                 ans4.setFont(new Font("ANS" , Font.PLAIN , 20));
                 photo.add(ans4);
                 photo.updateUI();
-                TimeUnit.SECONDS.sleep(3);
-                photo.remove(ans1);
-                photo.remove(ans2);
-                photo.remove(ans3);
-                photo.remove(ans4);
-                photo.remove(row_question);
-                photo.updateUI();
-
+                TimeUnit.SECONDS.sleep(1);
+//                photo.remove(ans1);
+//                photo.remove(ans2);
+//                photo.remove(ans3);
+//                photo.remove(ans4);
+//                photo.remove(row_question);
+//                photo.updateUI();
+                keysingl=0;
+                key2=0;
                 frame.addKeyListener(new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {}
@@ -248,6 +249,15 @@ public class BET  {
                     @Override
                     public void keyReleased(KeyEvent e) {}
                 });
+                while (keysingl == 0 ) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                photo.remove(ans1);
+                photo.remove(ans2);
+                photo.remove(ans3);
+                photo.remove(ans4);
+                photo.remove(row_question);
+                photo.updateUI();
                 key2=keysingl-48;
                 System.out.println(key2);
                 if(key2 == currentQuestion.getCorrectAnswer()) {
