@@ -1,18 +1,13 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.ImageIcon;
-import java.awt.Graphics;
 import java.util.concurrent.TimeUnit;
 
 public class BET  {
@@ -170,7 +165,6 @@ public class BET  {
                 bet4.setFont(new Font("BID" , Font.PLAIN , 25));
                 photo.add(bet4);
                 photo.updateUI();
-                TimeUnit.SECONDS.sleep(1);
 //                photo.remove(bet1);
 //                photo.remove(bet2);
 //                photo.remove(bet3);
@@ -248,7 +242,6 @@ public class BET  {
                     bet4.setFont(new Font("BID" , Font.PLAIN , 25));
                     photo.add(bet4);
                     photo.updateUI();
-                    TimeUnit.SECONDS.sleep(1);
                     //while (flag1==false){
                     //do{
                     keybet2=0;
@@ -322,7 +315,6 @@ public class BET  {
                 ans4.setFont(new Font("ANS" , Font.PLAIN , 20));
                 photo.add(ans4);
                 photo.updateUI();
-                TimeUnit.SECONDS.sleep(1);
 //                photo.remove(ans1);
 //                photo.remove(ans2);
 //                photo.remove(ans3);
@@ -357,9 +349,9 @@ public class BET  {
                     player1.addPoints(player1.getBid());
                 }
 
-                if(currentAnswer == currentQuestion.getCorrectAnswer()) {
-                    player1.addPoints(player1.getBid());
-                }
+                //if(currentAnswer == currentQuestion.getCorrectAnswer()) {
+                //    player1.addPoints(player1.getBid());
+               // }
                 else if(key1 != currentQuestion.getCorrectAnswer()) {
                     player1.addPoints(-player1.getBid());
                 }
@@ -389,7 +381,6 @@ public class BET  {
                     ans4.setFont(new Font("ANS" , Font.PLAIN , 20));
                     photo.add(ans4);
                     photo.updateUI();
-                    TimeUnit.SECONDS.sleep(1);
 //                photo.remove(ans1);
 //                photo.remove(ans2);
 //                photo.remove(ans3);
@@ -424,9 +415,9 @@ public class BET  {
                         player2.addPoints(player2.getBid());
                     }
 
-                    if(currentAnswer == currentQuestion.getCorrectAnswer()) {
-                        player2.addPoints(player2.getBid());
-                    }
+                   // if(currentAnswer == currentQuestion.getCorrectAnswer()) {
+                    //    player2.addPoints(player2.getBid());
+                    //}
                     else if(key2 != currentQuestion.getCorrectAnswer()) {
                         player2.addPoints(-player2.getBid());
                     }
@@ -451,7 +442,7 @@ public class BET  {
         photo.remove(score1);
         photo.updateUI();
         if (player2!=null){
-            score2.setText(player2.getName()+" scor:" + player1.getPoints());
+            score2.setText(player2.getName()+" scor:" + player2.getPoints());
             score2.setBounds(350 , 200 , 200 , 30);
             score2.setForeground(Color.black);
             score2.setFont(new Font("SCORE" , Font.PLAIN , 20));
