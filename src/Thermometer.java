@@ -17,7 +17,7 @@ public class Thermometer  {
     private Player player;
     private final int number_rounds,number_questions,points=0;
     private Player player1,player2;
-    private int flag,bider,currentAnswer,roundCounter,questCounter,questionCounter,keyfirst,keysecond,key1,key2, pointpl1, pointpl2;
+    private int flag,bider,currentAnswer,roundCounter,questCounter,questionCounter,keyfirst,keysecond,pointpl1, pointpl2,k1,k2;
     private int flag1=1,flag2=1,flag3=1,flag4=1;
 
     private String currentQ;
@@ -102,13 +102,12 @@ public class Thermometer  {
         control1.setFont(new Font("CONTROL", Font.PLAIN, 17));
         photo.add(control1);
         photo.updateUI();
-        if (player2 != null) {
-            control2.setText("CONTROL PL2:6 7 8 9");
-            control2.setBounds(350, 220, 200, 30);
-            control2.setForeground(Color.BLACK);
-            control2.setFont(new Font("CONTROL", Font.PLAIN, 17));
-            photo.add(control2);
-        }
+        control2.setText("CONTROL PL2:6 7 8 9");
+        control2.setBounds(350, 220, 200, 30);
+        control2.setForeground(Color.BLACK);
+        control2.setFont(new Font("CONTROL", Font.PLAIN, 17));
+        photo.add(control2);
+
         TimeUnit.SECONDS.sleep(3);
         photo.updateUI();
         photo.remove(control1);
@@ -181,216 +180,170 @@ public class Thermometer  {
                 ans4.setFont(new Font("ANS", Font.PLAIN, 20));
                 photo.add(ans4);
                 photo.updateUI();
-                if (player2 == null) {
-                    keyfirst = 0;
-                    key1 = 0;
-                    frame.addKeyListener(new KeyListener() {
-                        @Override
-                        public void keyTyped(KeyEvent e) {
-                        }
-
-                        @Override
-                        public void keyPressed(KeyEvent e) {
-                            keyfirst = e.getKeyCode();
-                            System.out.println(keyfirst);
-                        }
-
-                        @Override
-                        public void keyReleased(KeyEvent e) {
-                        }
-                    });
-                    while (keyfirst == 0) {
-                        TimeUnit.SECONDS.sleep(1);
+                keyfirst = 0;
+                frame.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        keyfirst = e.getKeyCode();
+                        System.out.println(keyfirst);
                     }
-                    key1 = keyfirst - 48;
-                    photo.remove(ans1);
-                    photo.remove(ans2);
-                    photo.remove(ans3);
-                    photo.remove(ans4);
-                    photo.remove(row_question);
-                    if (key1 == currentQuestion.getCorrectAnswer()) {
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+                while (keyfirst == 0) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                k1=keyfirst-48;
+                keysecond = 0;
+                frame.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {}
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    keysecond = e.getKeyCode();
+                    System.out.println(keysecond);
+                }
+                @Override
+                public void keyReleased(KeyEvent e) {}
+                });
+                while (keysecond == 0) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                k2=keysecond-48;
+                photo.remove(ans1);
+                photo.remove(ans2);
+                photo.remove(ans3);
+                photo.remove(ans4);
+                photo.remove(row_question);
+                //################################KEYFIRST################################
+                if (k1==1 || k1==2 || k1==3 || k1==4){
+                    int temp1 = 0;
+                    if (k1==1) {
+                        temp1=1;
+                    }
+                    if (k1==2) {
+                        temp1=2;
+                    }
+                    if (k1==3) {
+                        temp1=3;
+                    }
+                    if (k1==4) {
+                        temp1=4;
+                    }
+                    if (temp1== currentQuestion.getCorrectAnswer()) {
                         pointpl1++;
                     }
-                    if (pointpl1 == 1) {
+                    if (pointpl1==1) {
                         player1.addPoints(5000);
-                        System.out.println("You  Win ");
-                        flag = 0;
+                        System.out.println("You  win Player1");
+                        flag1=0;
+                        break;
                     }
-                } else {
-                    keyfirst = 0;
-                    key1 = 0;
-                    key2 = 0;
-                    frame.addKeyListener(new KeyListener() {
-                        @Override
-                        public void keyTyped(KeyEvent e) {
-                        }
-
-                        @Override
-                        public void keyPressed(KeyEvent e) {
-                            keyfirst = e.getKeyCode();
-                            System.out.println(keyfirst);
-                        }
-
-                        @Override
-                        public void keyReleased(KeyEvent e) {
-                        }
-                    });
-                    while (keyfirst == 0) {
-                        TimeUnit.SECONDS.sleep(1);
-                    }
-                    keysecond = 0;
-                    frame.addKeyListener(new KeyListener() {
-                        @Override
-                        public void keyTyped(KeyEvent e) {
-                        }
-
-                        @Override
-                        public void keyPressed(KeyEvent e) {
-                            keysecond = e.getKeyCode();
-                            System.out.println(keysecond);
-                        }
-
-                        @Override
-                        public void keyReleased(KeyEvent e) {
-                        }
-                    });
-                    while (keysecond == 0) {
-                        TimeUnit.SECONDS.sleep(1);
-                    }
-                    //################################KEYFIRST################################
-                    if ((keyfirst == 49 || keyfirst == 50 || keyfirst == 51 || keyfirst == 52) && flag == 1) {
-                        int temp1 = 0;
-                        if (keyfirst - 48 == 1) {
-                            temp1 = 1;
-                        }
-                        if (keyfirst - 48 == 2) {
-                            temp1 = 2;
-                        }
-                        if (keyfirst - 48 == 3) {
-                            temp1 = 3;
-                        }
-                        if (keyfirst - 48 == 4) {
-                            temp1 = 4;
-                        }
-                        if (temp1 == currentQuestion.getCorrectAnswer()) {
-                            pointpl1++;
-                        }
-                        if (pointpl1 == 1) {
-                            player1.addPoints(5000);
-                            System.out.println("You  win Player1");
-                            flag1 = 0;
-                            //flag = 0;
-                            break;
-                        }
-                    }
-                    if ((keyfirst == 54 || keyfirst == 55 || keyfirst == 56 || keyfirst == 57) && flag == 1) {
-                        int temp1 = 0;
-                        if (keyfirst - 48 == 6) {
-                            temp1 = 1;
-                        }
-                        if (keyfirst - 48 == 7) {
-                            temp1 = 2;
-                        }
-                        if (keyfirst - 48 == 8) {
-                            temp1 = 3;
-                        }
-                        if (keyfirst - 48 == 9) {
-                            temp1 = 4;
-                        }
-                        if (temp1 == currentQuestion.getCorrectAnswer()) {
-                            pointpl2++;
-                        }
-                        if (pointpl2 == 1) {
-                            player2.addPoints(5000);
-                            System.out.println("You  win Player2");
-                            flag2 = 0;
-                            //flag = 0;
-                            break;
-                        }
-                    }
-                    //#######################################################################
-                    //##############################KEYSECOND#################################
-                    if ((keysecond == 49 || keysecond == 50 || keysecond == 51 || keysecond == 52) && flag == 1) {
-                        int temp2 = 0;
-                        if (keysecond - 48 == 1) {
-                            temp2=1;
-                        }
-                        if (keysecond - 48 == 2) {
-                            temp2=2;
-                        }
-                        if (keysecond - 48 == 3) {
-                            temp2=3;
-                        }
-                        if (keysecond - 48 == 4) {
-                            temp2=4;
-                        }
-                        if (temp2==currentQuestion.getCorrectAnswer()) {
-                            pointpl1++;
-                        }
-                        if (pointpl1==1) {
-                            player2.addPoints(5000);
-                            System.out.println("You  win Player1");
-                            flag3 = 0;
-                            //flag = 0;
-                            break;
-                        }
-                    }
-                    if ((keysecond == 54 || keysecond == 55 || keysecond == 56 || keysecond == 57) && flag == 1) {
-                        int temp2 = 0;
-                        if (keysecond - 48 == 6) {
-                            temp2 = 1;
-                        }
-                        if (keysecond - 48 == 7) {
-                            temp2 = 2;
-                        }
-                        if (keysecond - 48 == 8) {
-                            temp2 = 3;
-                        }
-                        if (keysecond - 48 == 9) {
-                            temp2 = 4;
-                        }
-                        if (temp2 == currentQuestion.getCorrectAnswer()) {
-                            pointpl2++;
-                        }
-                        if (pointpl2 == 1) {
-                            player2.addPoints(5000);
-                            System.out.println("You  win Player2");
-                            flag4 = 0;
-                            //flag = 0;
-                            break;
-                        }
-                    }
-                    //################################################################################
                 }
-                photo.remove(question);
-                photo.updateUI();
+                if (k1==6 || k1==7 || k1==8 || k1==9) {
+                    int temp1 = 0;
+                    if (k1==6) {
+                        temp1 = 1;
+                    }
+                    if (k1==7) {
+                        temp1 = 2;
+                    }
+                    if (k1==8) {
+                        temp1 = 3;
+                    }
+                    if (k1==9) {
+                        temp1 = 4;
+                    }
+                    if (temp1 == currentQuestion.getCorrectAnswer()) {
+                        pointpl2++;
+                    }
+                    if (pointpl2 == 1) {
+                        player2.addPoints(5000);
+                        System.out.println("You  win Player2");
+                        flag2 = 0;
+                        break;
+                    }
+                }
+                //#######################################################################
+                //##############################KEYSECOND#################################
+                if (k2==1|| k2==2 || k2==3 || k2==4) {
+                    int temp2 = 0;
+                    if (k2== 1) {
+                        temp2=1;
+                    }
+                    if (k2== 2) {
+                        temp2=2;
+                    }
+                    if (k2== 3) {
+                        temp2=3;
+                    }
+                    if (k2== 4) {
+                        temp2=4;
+                    }
+                    if (temp2==currentQuestion.getCorrectAnswer()) {
+                        pointpl1++;
+                    }
+                    if (pointpl1==1) {
+                        player2.addPoints(5000);
+                        System.out.println("You  win Player1");
+                        flag3 = 0;
+                        break;
+                    }
+                }
+                if (k2==6 || k2==7 || k2==8 || k2==9) {
+                    int temp2 = 0;
+                    if (k2==6) {
+                        temp2 = 1;
+                    }
+                    if (k2==7) {
+                        temp2 = 2;
+                    }
+                    if (k2== 8) {
+                        temp2 = 3;
+                    }
+                    if (k2== 9) {
+                        temp2 = 4;
+                    }
+                    if (temp2 == currentQuestion.getCorrectAnswer()) {
+                        pointpl2++;
+                    }
+                    if (pointpl2 == 1) {
+                        player2.addPoints(5000);
+                        System.out.println("You  win Player2");
+                        flag4 = 0;
+                        break;
+                    }
+                }
+                //################################################################################
             }
-            photo.removeAll();
+            photo.remove(question);
             photo.updateUI();
-
-            if (flag1 == 0 || flag3 == 0) {
-                label1.setText(player1.getName() + " scor:" + player1.getPoints());
-                label1.setBounds(350, 200, 200, 30);
-                label1.setForeground(Color.black);
-                label1.setFont(new Font("SCORE", Font.PLAIN, 20));
-                photo.add(label1);
-                photo.updateUI();
-                TimeUnit.SECONDS.sleep(5);
-                photo.remove(label1);
-                photo.updateUI();
-            }
-
-            if (flag2 == 0 || flag4 == 0) {
-                label2.setText(player2.getName() + " scor:" + player2.getPoints());
-                label2.setBounds(350, 200, 200, 30);
-                label2.setForeground(Color.black);
-                label2.setFont(new Font("SCORE", Font.PLAIN, 20));
-                photo.add(label2);
-                photo.updateUI();
-                TimeUnit.SECONDS.sleep(5);
-                photo.remove(label2);
-                photo.updateUI();
-            }
+        }
+        photo.removeAll();
+        photo.updateUI();
+        if (flag1 == 0 || flag3 == 0) {
+            label1.setText(player1.getName() + " scor:" + player1.getPoints());
+            label1.setBounds(350, 200, 200, 30);
+            label1.setForeground(Color.black);
+            label1.setFont(new Font("SCORE", Font.PLAIN, 20));
+            photo.add(label1);
+            photo.updateUI();
+            TimeUnit.SECONDS.sleep(5);
+            photo.remove(label1);
+            photo.updateUI();
+        }
+        if (flag2 == 0 || flag4 == 0) {
+            label2.setText(player2.getName() + " scor:" + player2.getPoints());
+            label2.setBounds(350, 200, 200, 30);
+            label2.setForeground(Color.black);
+            label2.setFont(new Font("SCORE", Font.PLAIN, 20));
+            photo.add(label2);
+            photo.updateUI();
+            TimeUnit.SECONDS.sleep(5);
+            photo.remove(label2);
+            photo.updateUI();
         }
     }
 
