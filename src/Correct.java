@@ -87,16 +87,7 @@ public class Correct {
         //Game();
     }
 
-    private void GameSignle() throws InterruptedException {
-//        row_question = "PRWTH ERWTHSHPRWTH ERWTHSHPRWTH ERWTHSH";
-//        b1 = new JLabel();
-//        b1.setText(row_question);
-//        b1.setForeground(Color.WHITE);
-//        b1.setBounds(395 - row_question.length()*4 , 10 , row_question.length()*10 , 20);
-//        photo.add(b1);
-//        System.out.println(row_question.length());
-
-
+    private void GameMulti() throws InterruptedException {
         //##########################
         answers = new ArrayList<>();
 
@@ -278,19 +269,15 @@ public class Correct {
 
 
 
-    private void GameMulti() {
-
+    private void GameSignle() {
     }
 
-    public void KeyPressed(KeyEvent e) {
-
-    }
 
     public static void main(String[] args) throws IOException, InterruptedException {
         Player pl1 = new Player();
         Player pl2 = new Player();
         pl1.setName("george");
-        pl2.setName("null");
+        pl2.setName("Nick");
 
         new Correct(pl1 , pl2 , 2 , 2);
     }
