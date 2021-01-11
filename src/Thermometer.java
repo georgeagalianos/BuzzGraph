@@ -41,7 +41,10 @@ public class Thermometer  {
 //        multi();
         Call();
     }
-
+    /**
+     * Ολα τα γραφικα εχουν υλοποιηθει με ενα frame και αρκετα label χωρις να χρησιμοποιηθει κανενα panel
+     * @throws InterruptedException
+     */
     private void Call() throws IOException,InterruptedException {
         frame = new JFrame("BET");
         frame.setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
@@ -80,10 +83,14 @@ public class Thermometer  {
         //Gamesingl();
         //Gamemulti();
     }
+
     private void Game()throws IOException,InterruptedException {
         Questions questions = new Questions();
         ArrayList<Question> roundQuestions;
         roundCounter = 1;
+        /**
+         * Εμφανιση των πληκτρων του καθε παιχτη
+         */
         //#####################CONTROLER######################
         frame.setVisible(true);
         label1.setText("THE FASTER WINNER");
@@ -102,6 +109,7 @@ public class Thermometer  {
         control1.setFont(new Font("CONTROL", Font.PLAIN, 17));
         photo.add(control1);
         photo.updateUI();
+
         control2.setText("CONTROL PL2:6 7 8 9");
         control2.setBounds(350, 220, 200, 30);
         control2.setForeground(Color.BLACK);
@@ -121,7 +129,10 @@ public class Thermometer  {
         for (int i = 0; i < number_rounds; i++) {
             roundQuestions = questions.getQuestions(number_questions);
             frame.setVisible(true);
-
+            /**
+             * Εμφανιση του γυρου που βρισκομαστε,ο οποιος συνεχιζει να  παραμενει πανω για καλητερη κατανοησει μεχρι
+             *να τελειωσει το παιχνιδι.
+             */
             //###############EMFANISEI ROUND##########################
             round.setText("Round: " + roundCounter);
             round.setBounds(360, 20, 200, 30);
@@ -134,6 +145,10 @@ public class Thermometer  {
             //###############################################
             questCounter = 1;
             for (int j = 0; j < number_questions; j++) {
+                /**
+                 * Εμφανιση του αριθμου της ερωτησεις η οποια παραμενει πανω μεχρι να τελειωσει το παιχνιδι ,για
+                 *καλυτερη κατανοησει του παιχνιδιου
+                 */
                 //###############EMFANIzEI ARITHMO ERVTHSEIS##########################
                 question.setText("Question: " + questCounter);
                 question.setBounds(350, 50, 200, 30);
@@ -150,6 +165,9 @@ public class Thermometer  {
                 String currentQ = currentQuestion.printQuestion();
                 answers = currentQuestion.printAnswers();
 
+                /**
+                 * Εμφανιση των ερωτησεων και των πιθανων απαντησεων που εχουν επιλεχθει ωστε να επιλεχθει η σωστη
+                 */
                 row_question.setText(currentQuestion.printQuestion());
                 row_question.setBounds(390 - currentQ.length() * 6, 100, 800, 30);
                 row_question.setForeground(Color.CYAN);
@@ -180,6 +198,10 @@ public class Thermometer  {
                 ans4.setFont(new Font("ANS", Font.PLAIN, 20));
                 photo.add(ans4);
                 photo.updateUI();
+                /**
+                 * Δυο KEYLISTENER ωστε να παιρνωνται οι απαντησεις απο τους παιχτες,ενω με δυο while ελενχουμε αν εχει
+                 * πληκτρολογηθει απο τον χρηστη καποια απαντηση.
+                 */
                 keyfirst = 0;
                 frame.addKeyListener(new KeyListener() {
                     @Override
@@ -187,7 +209,7 @@ public class Thermometer  {
                     @Override
                     public void keyPressed(KeyEvent e) {
                         keyfirst = e.getKeyCode();
-                        System.out.println(keyfirst);
+                        //System.out.println(keyfirst);
                     }
                     @Override
                     public void keyReleased(KeyEvent e) {}
@@ -195,6 +217,7 @@ public class Thermometer  {
                 while (keyfirst == 0) {
                     TimeUnit.SECONDS.sleep(1);
                 }
+                System.out.println(keyfirst);
                 k1=keyfirst-48;
                 keysecond = 0;
                 frame.addKeyListener(new KeyListener() {
@@ -203,7 +226,7 @@ public class Thermometer  {
                 @Override
                 public void keyPressed(KeyEvent e) {
                     keysecond = e.getKeyCode();
-                    System.out.println(keysecond);
+                    //System.out.println(keysecond);
                 }
                 @Override
                 public void keyReleased(KeyEvent e) {}
@@ -211,6 +234,7 @@ public class Thermometer  {
                 while (keysecond == 0) {
                     TimeUnit.SECONDS.sleep(1);
                 }
+                System.out.println(keysecond);
                 k2=keysecond-48;
                 photo.remove(ans1);
                 photo.remove(ans2);
@@ -218,21 +242,16 @@ public class Thermometer  {
                 photo.remove(ans4);
                 photo.remove(row_question);
                 //################################KEYFIRST################################
+                /**
+                 *Η εντολη ελενχου IF χρησιμοποιειται για να:
+                 *Οι εξωτερικες εντολες IF ελενχουν σε ποιον παιχτη ανηκει η πιο γρηγορη απαντηση
+                 *Η πρωτη εμφωλευμενη IF ελενχει αν η απαντηση που δοθηκε απο τον χρηστη αν ειναι η σωστη
+                 *Ενω η δευτερη εμφωλευμενη IF ελενχει αν καποιος απα τους δυο παιχτες (που απαντησε πρωτος σωστα)
+                 *εφτασε πρωτος τις 5 σωστες απαντησεις ωστε να τελειωσει το παιχνιδι και αυτο επιτυνχανεται με την
+                 *εντολη break
+                 */
                 if (k1==1 || k1==2 || k1==3 || k1==4){
-                    int temp1 = 0;
-                    if (k1==1) {
-                        temp1=1;
-                    }
-                    if (k1==2) {
-                        temp1=2;
-                    }
-                    if (k1==3) {
-                        temp1=3;
-                    }
-                    if (k1==4) {
-                        temp1=4;
-                    }
-                    if (temp1== currentQuestion.getCorrectAnswer()) {
+                    if (k1== currentQuestion.getCorrectAnswer()) {
                         pointpl1++;
                     }
                     if (pointpl1==1) {
@@ -243,7 +262,7 @@ public class Thermometer  {
                     }
                 }
                 if (k1==6 || k1==7 || k1==8 || k1==9) {
-                    int temp1 = 0;
+                    /*int temp1 = 0;
                     if (k1==6) {
                         temp1 = 1;
                     }
@@ -255,8 +274,8 @@ public class Thermometer  {
                     }
                     if (k1==9) {
                         temp1 = 4;
-                    }
-                    if (temp1 == currentQuestion.getCorrectAnswer()) {
+                    }*/
+                    if (k2-5 == currentQuestion.getCorrectAnswer()) {
                         pointpl2++;
                     }
                     if (pointpl2 == 1) {
@@ -268,21 +287,17 @@ public class Thermometer  {
                 }
                 //#######################################################################
                 //##############################KEYSECOND#################################
+                /**
+                 * Η εντολη ελενχου IF χρησιμοποιειται για να:
+                 * Οι εξωτερικες εντολες IF ελενχουν απο ποιον παιχτη δοθηκε η δευτερη απαντησει
+                 * Η πρωτη εμφωλευμενη IF ελενχει αν η απαντηση που δοθηκε απο τον χρηστη αν ειναι η σωστη
+                 * Ενω η δευτερη εμφωλευμενη IF ελενχει αν καποιος απα τους δυο παιχτες εφτασε πρωτος τις 5 σωστες
+                 * απαντησεις ωστε να τελειωσει το παιχνιδι και αυτο επιτυνχανεται με την
+                 * εντολη break
+                 */
+
                 if (k2==1|| k2==2 || k2==3 || k2==4) {
-                    int temp2 = 0;
-                    if (k2== 1) {
-                        temp2=1;
-                    }
-                    if (k2== 2) {
-                        temp2=2;
-                    }
-                    if (k2== 3) {
-                        temp2=3;
-                    }
-                    if (k2== 4) {
-                        temp2=4;
-                    }
-                    if (temp2==currentQuestion.getCorrectAnswer()) {
+                    if (k2==currentQuestion.getCorrectAnswer()) {
                         pointpl1++;
                     }
                     if (pointpl1==1) {
@@ -293,7 +308,7 @@ public class Thermometer  {
                     }
                 }
                 if (k2==6 || k2==7 || k2==8 || k2==9) {
-                    int temp2 = 0;
+                   /* int temp2 = 0;
                     if (k2==6) {
                         temp2 = 1;
                     }
@@ -305,8 +320,8 @@ public class Thermometer  {
                     }
                     if (k2== 9) {
                         temp2 = 4;
-                    }
-                    if (temp2 == currentQuestion.getCorrectAnswer()) {
+                    }*/
+                    if (k2-5 == currentQuestion.getCorrectAnswer()) {
                         pointpl2++;
                     }
                     if (pointpl2 == 1) {
@@ -323,6 +338,12 @@ public class Thermometer  {
         }
         photo.removeAll();
         photo.updateUI();
+        /**
+         * Ελεχνω ποιος απο τους δυο παιχτες ειναι ο νικητης με τις βοηθητικες μεταβλητες flag,οι οποιες ειναι
+         * αρχικοποιημενες με την τιμη 1 και παιρνουν την τιμη 0 οταν τουλαχιστον ενας απο τους δυο παιχτες φτασει
+         * τις 5 σωστες απαντησεις.Η τιμη 0 παιρνεται Πριν την τερματικη εντολη break
+         *
+         */
         if (flag1 == 0 || flag3 == 0) {
             label1.setText(player1.getName() + " scor:" + player1.getPoints());
             label1.setBounds(350, 200, 200, 30);

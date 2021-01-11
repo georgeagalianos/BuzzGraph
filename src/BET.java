@@ -74,15 +74,23 @@ public class BET  {
         Questions questions = new Questions();
         ArrayList<Question> roundQuestions;
 
-        Gamesingl();
+        Game();
+        //Gamesingl();
         //Gamemulti();
     }
 
+    /**
+     * Ολα τα γραφικα εχουν υλοποιηθει με ενα frame και αρκετα label χωρις να χρησιμοποιηεθ κανενα panel
+     * @throws InterruptedException
+     */
 
-    private void Gamesingl()throws InterruptedException {
+    private void Game()throws InterruptedException {
         Questions questions = new Questions();
         ArrayList<Question> roundQuestions;
         roundCounter = 1;
+        /**
+         * Εμφανιση των πληκτρων του καθε παιχτη αναλογως αν το παιχνιδι ειναι ατομικο (1 παιχτης) ή ομαδικο(2 παιχτες)
+         */
         //#####################CONTROLER######################
         control1.setText("CONTROL PL1:1 2 3 4");
         control1.setBounds(350, 190, 200, 30);
@@ -106,7 +114,10 @@ public class BET  {
         //####################################################
         for(int i=0 ; i<number_rounds ; i++) {
             roundQuestions = questions.getQuestions(number_questions);
-
+            /**
+             * Εμφανιση του γυρου που βρισκομαστε,ο οποιος συνεχιζει να  παραμενει πανω για καλητερη κατανοησει μεχρι
+             *να τελειωσει το παιχνιδι.
+             */
             frame.setVisible(true);
             //###############EMFANISEI ROUND##########################
             round.setText("Round: " + roundCounter);
@@ -123,6 +134,10 @@ public class BET  {
 
                 //#####################BET#################################################
                 //###############EMFANIzEI ARITHMO ERVTHSEIS##########################
+                /**
+                 * Εμφανιση του αριθμου της ερωτησεις η οποια παραμενει πανω μεχρι να τελειωσει το παιχνιδι ,για
+                 *καλυτερη κατανοησει του παιχνιδιου
+                 */
                 question.setText("Question: " + questCounter);
                 question.setBounds(350 , 50 , 200 , 30);
                 question.setForeground(Color.black);
@@ -175,6 +190,11 @@ public class BET  {
                 //##################BET###############################
                 //while (flag1==false){
                 //do{
+                /**
+                 * Με Keylistener οριζεται απο τον χρηστη το ποσο  που θελει να πονταρει.
+                 * Με την δομη επαναληψης WHILE  ελεχνω αν εχει πληκτρολογιθει καποιο ποσο ωστε να συνεχισει.
+                 * Η while περιμενει μεχρι να πληκρολογηθει το ποσο
+                 */
                 keybet1=0;
                 frame.addKeyListener(new KeyListener() {
                     @Override
@@ -210,6 +230,12 @@ public class BET  {
                 //}//while (key2!=0);
                 //############################################
                 //####################PLAYER2########################################
+                /**
+                 * Με μια εντολη if ελενχω την υπαρξει δευτερου παιχτη.
+                 * Με Keylistener οριζεται απο τον χρηστη το ποσο  που θελει να πονταρει.
+                 * Με την δομη επαναληψης WHILE  ελεχνω αν εχει πληκτρολογιθει καποιο ποσο ωστε να συνεχισει.
+                 * Η while περιμενει μεχρι να πληκρολογηθει το ποσο
+                 */
                 if (player2!=null){
                     lbet.setText("YOU HAVE FOR BID PLAYER2:");
                     lbet.setBounds(330,170,800,50);
@@ -284,7 +310,9 @@ public class BET  {
                 currentQuestion = roundQuestions.get(j);
                 String currentQ = currentQuestion.printQuestion();
                 answers = currentQuestion.printAnswers();
-
+                /**
+                 * Εμφανιση των ερωτησεων και των πιθανων απαντησεων που εχουν επιλεχθει ωστε να επιλεχθει η σωστη
+                 */
                 row_question.setText(currentQuestion.printQuestion());
                 row_question.setBounds(390 - currentQ.length()*6 , 100 , 800 , 30);
                 row_question.setForeground(Color.CYAN);
@@ -321,6 +349,14 @@ public class BET  {
 //                photo.remove(ans4);
 //                photo.remove(row_question);
 //                photo.updateUI();
+                /**
+                 * Με εναν KEYLISTENER περιμενω την απαντηση του παιχτη
+                 * Με την δομη επαναληψης WHILE  ελεχνω αν εχει πληκτρολογιθει καποιο ποσο ωστε να συνεχισει.
+                 * Η while περιμενει μεχρι να πληκρολογηθει το ποσο
+                 * Επειτα με μια εντολη if ελενχεται αν η απαντηση.
+                 * Αν ειναι σωστη  προστιθονται οι ποντοι που ειχαν επιλεχθει παραπανω.Αν η απαντηση ειναι λαθος οι
+                 * ποντοι αφαιρουνται
+                 */
                 keysingl=0;
                 key1=0;
                 frame.addKeyListener(new KeyListener() {
@@ -348,14 +384,19 @@ public class BET  {
                 if(key1 == currentQuestion.getCorrectAnswer()) {
                     player1.addPoints(player1.getBid());
                 }
-
-                //if(currentAnswer == currentQuestion.getCorrectAnswer()) {
-                //    player1.addPoints(player1.getBid());
-               // }
                 else if(key1 != currentQuestion.getCorrectAnswer()) {
                     player1.addPoints(-player1.getBid());
                 }
                 //#################################PLAYER2###########################################
+                /**
+                 * Με μια εντολη if ελενχω την υπαρξει δευτερου παιχτη.
+                 * Με εναν KEYLISTENER περιμενω την απαντηση του παιχτη
+                 * Με την δομη επαναληψης WHILE  ελεχνω αν εχει πληκτρολογιθει καποιο ποσο ωστε να συνεχισει.
+                 * Η while περιμενει μεχρι να πληκρολογηθει το ποσο
+                 * Επειτα με μια εντολη if ελενχεται αν η απαντηση.
+                 * Αν ειναι σωστη  προστιθονται οι ποντοι που ειχαν επιλεχθει παραπανω.Αν η απαντηση ειναι λαθος η
+                 * ποντοι αφαιρουνται
+                 */
                 if (player2!=null){
                     ans1.setText("6 :" + answers.get(0));
                     ans1.setBounds(150 , 210 , 300 , 30);
@@ -407,7 +448,6 @@ public class BET  {
                     photo.remove(ans2);
                     photo.remove(ans3);
                     photo.remove(ans4);
-                    photo.remove(row_question);
                     photo.updateUI();
                     key2=keymulti-48;
                     System.out.println(key2);
@@ -422,6 +462,7 @@ public class BET  {
                         player2.addPoints(-player2.getBid());
                     }
                 }
+                photo.remove(row_question);
                 //###################################################################################
                 //##################################################################################
                 photo.remove(question);
@@ -432,6 +473,9 @@ public class BET  {
             photo.updateUI();
 
         }
+        /**
+         * Με μια εντολη if ελενχω την υπαρξει δευτερου παιχτη και εμφανιζωνατ τα καταλληλα score
+         */
         score1.setText(player1.getName()+" scor:" + player1.getPoints());
         score1.setBounds(350 , 200 , 200 , 30);
         score1.setForeground(Color.black);
@@ -453,14 +497,12 @@ public class BET  {
             photo.updateUI();
         }
     }
-
         public static void main(String[] args) throws IOException, InterruptedException {
         Player pl1 = new Player();
         Player pl2 = new Player();
         pl1.setName("nik");
         pl2.setName("george");
-        //new BET(pl1 ,null,1 , 3);
-        new BET(pl1 ,pl2,1 , 3);
+        new BET(pl1 ,null,1 , 3);
+       // new BET(pl1 ,pl2,1 , 3);
     }
-
 }
