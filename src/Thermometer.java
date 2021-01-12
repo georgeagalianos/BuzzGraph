@@ -17,8 +17,7 @@ public class Thermometer  {
     private Player player;
     private final int number_rounds,number_questions,points=0;
     private Player player1,player2;
-    private int flag,bider,currentAnswer,roundCounter,questCounter,questionCounter,keyfirst,keysecond,pointpl1, pointpl2,k1,k2;
-    private int flag1=1,flag2=1,flag3=1,flag4=1;
+    private int flag,bider,currentAnswer,roundCounter,questCounter,questionCounter,keyfirst,keysecond,pointpl1, pointpl2,k1,k2,flag1=1,flag2=1;
 
     private String currentQ;
 
@@ -28,7 +27,7 @@ public class Thermometer  {
 
     private JFrame frame;
 
-    private JLabel photo,round,question,ans1,ans2,ans3,ans4,CorrectA,row_question,control1,control2,score1,score2,label1,label2;
+    private JLabel photo,round,question,ans1,ans2,ans3,ans4,row_question,control1,control2,score1,score2,label1,label2,l1;
 
     private ImageIcon img;
 
@@ -71,7 +70,7 @@ public class Thermometer  {
         label1=new JLabel();
         label2=new JLabel();
 
-        CorrectA=new JLabel();
+        l1=new JLabel();
 
         frame.setVisible(false);
         answers = new ArrayList<>();
@@ -140,7 +139,7 @@ public class Thermometer  {
             round.setFont(new Font("ROUND", Font.PLAIN, 25));
             photo.add(round);
             photo.updateUI();
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(2);
             roundCounter++;
             //###############################################
             questCounter = 1;
@@ -254,7 +253,7 @@ public class Thermometer  {
                     if (k1== currentQuestion.getCorrectAnswer()) {
                         pointpl1++;
                     }
-                    if (pointpl1==1) {
+                    if (pointpl1==5) {
                         player1.addPoints(5000);
                         System.out.println("You  win Player1");
                         flag1=0;
@@ -262,23 +261,10 @@ public class Thermometer  {
                     }
                 }
                 if (k1==6 || k1==7 || k1==8 || k1==9) {
-                    /*int temp1 = 0;
-                    if (k1==6) {
-                        temp1 = 1;
-                    }
-                    if (k1==7) {
-                        temp1 = 2;
-                    }
-                    if (k1==8) {
-                        temp1 = 3;
-                    }
-                    if (k1==9) {
-                        temp1 = 4;
-                    }*/
                     if (k2-5 == currentQuestion.getCorrectAnswer()) {
                         pointpl2++;
                     }
-                    if (pointpl2 == 1) {
+                    if (pointpl2==5) {
                         player2.addPoints(5000);
                         System.out.println("You  win Player2");
                         flag2 = 0;
@@ -300,34 +286,21 @@ public class Thermometer  {
                     if (k2==currentQuestion.getCorrectAnswer()) {
                         pointpl1++;
                     }
-                    if (pointpl1==1) {
+                    if (pointpl1==5) {
                         player2.addPoints(5000);
                         System.out.println("You  win Player1");
-                        flag3 = 0;
+                        flag1 = 0;
                         break;
                     }
                 }
                 if (k2==6 || k2==7 || k2==8 || k2==9) {
-                   /* int temp2 = 0;
-                    if (k2==6) {
-                        temp2 = 1;
-                    }
-                    if (k2==7) {
-                        temp2 = 2;
-                    }
-                    if (k2== 8) {
-                        temp2 = 3;
-                    }
-                    if (k2== 9) {
-                        temp2 = 4;
-                    }*/
-                    if (k2-5 == currentQuestion.getCorrectAnswer()) {
+                    if (k2-5==currentQuestion.getCorrectAnswer()) {
                         pointpl2++;
                     }
-                    if (pointpl2 == 1) {
+                    if (pointpl2==5) {
                         player2.addPoints(5000);
                         System.out.println("You  win Player2");
-                        flag4 = 0;
+                        flag2 = 0;
                         break;
                     }
                 }
@@ -342,9 +315,9 @@ public class Thermometer  {
          * Ελεχνω ποιος απο τους δυο παιχτες ειναι ο νικητης με τις βοηθητικες μεταβλητες flag,οι οποιες ειναι
          * αρχικοποιημενες με την τιμη 1 και παιρνουν την τιμη 0 οταν τουλαχιστον ενας απο τους δυο παιχτες φτασει
          * τις 5 σωστες απαντησεις.Η τιμη 0 παιρνεται Πριν την τερματικη εντολη break
-         *
+         *Ενω αν δεν νικησει κανενας απο τους δυο τοτε εμφανιζεται καταλληολο μυνημα
          */
-        if (flag1 == 0 || flag3 == 0) {
+        if (flag1 == 0 ) {
             label1.setText(player1.getName() + " scor:" + player1.getPoints());
             label1.setBounds(350, 200, 200, 30);
             label1.setForeground(Color.black);
@@ -354,8 +327,7 @@ public class Thermometer  {
             TimeUnit.SECONDS.sleep(5);
             photo.remove(label1);
             photo.updateUI();
-        }
-        if (flag2 == 0 || flag4 == 0) {
+        }else if (flag2 == 0 ) {
             label2.setText(player2.getName() + " scor:" + player2.getPoints());
             label2.setBounds(350, 200, 200, 30);
             label2.setForeground(Color.black);
@@ -365,6 +337,18 @@ public class Thermometer  {
             TimeUnit.SECONDS.sleep(5);
             photo.remove(label2);
             photo.updateUI();
+        }
+        else{
+            l1.setText("ΔΕΝ ΝΙΚΕΙΣΕ ΚΑΝΕΝΑΣ");
+            l1.setBounds(350, 200, 200, 30);
+            l1.setForeground(Color.black);
+            l1.setFont(new Font("SCORE", Font.PLAIN, 16));
+            photo.add(l1);
+            photo.updateUI();
+            TimeUnit.SECONDS.sleep(5);
+            photo.remove(l1);
+            photo.updateUI();
+
         }
     }
 
