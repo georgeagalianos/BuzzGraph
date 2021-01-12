@@ -27,7 +27,8 @@ public class Thermometer  {
 
     private JFrame frame;
 
-    private JLabel photo,round,question,ans1,ans2,ans3,ans4,row_question,control1,control2,score1,score2,label1,label2,l1;
+    private JLabel photo,round,question,ans1,ans2,ans3,ans4,row_question,control1,control2,score1,score2,label1,label2;
+    private JLabel CorrectA,l1;
 
     private ImageIcon img;
 
@@ -69,8 +70,8 @@ public class Thermometer  {
         control2=new JLabel();
         label1=new JLabel();
         label2=new JLabel();
-
         l1=new JLabel();
+        CorrectA=new JLabel();
 
         frame.setVisible(false);
         answers = new ArrayList<>();
@@ -305,9 +306,23 @@ public class Thermometer  {
                     }
                 }
                 //################################################################################
+                photo.remove(question);
+                photo.updateUI();
+                /**
+                *Εμφανισει της σωστης απαντησεις
+                 */
+                CorrectA.setBounds(360 , 200 , 250 , 30);
+                CorrectA.setFont(new Font("CORRECT" , Font.PLAIN , 25));
+                CorrectA.setForeground(Color.CYAN);
+                int a = currentQuestion.getCorrectAnswer();
+                System.out.println(a);
+                CorrectA.setText("" + answers.get(a-1));
+                photo.add(CorrectA);
+                photo.updateUI();
+                TimeUnit.SECONDS.sleep(3);
+                photo.remove(CorrectA);
+                photo.updateUI();
             }
-            photo.remove(question);
-            photo.updateUI();
         }
         photo.removeAll();
         photo.updateUI();

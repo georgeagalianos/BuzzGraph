@@ -467,7 +467,20 @@ public class BET  {
                 //##################################################################################
                 photo.remove(question);
                 photo.updateUI();
-
+                /**
+                 *Εμφανισει της σωστης απαντησεις
+                 */
+                CorrectA.setBounds(360 , 200 , 250 , 30);
+                CorrectA.setFont(new Font("CORRECT" , Font.PLAIN , 25));
+                CorrectA.setForeground(Color.CYAN);
+                int a = currentQuestion.getCorrectAnswer();
+                System.out.println(a);
+                CorrectA.setText("" + answers.get(a-1));
+                photo.add(CorrectA);
+                photo.updateUI();
+                TimeUnit.SECONDS.sleep(3);
+                photo.remove(CorrectA);
+                photo.updateUI();
             }
             photo.removeAll();
             photo.updateUI();
