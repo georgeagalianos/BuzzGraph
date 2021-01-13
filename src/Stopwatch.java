@@ -1,7 +1,12 @@
+import com.codemr.intellij.ui.F;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,35 +16,36 @@ import java.util.concurrent.TimeUnit;
 public class Stopwatch {
     public Player pl1;
     public Player pl2;
+    private final int number_rounds;      //from player
+    private final int number_questRound;  //from player
 
-    private JFrame Stopwatch;
-    private JPanel panel;
+    private int key1;
+    private int key2;
+    private int countDown;
 
-    private JButton answer1;
-    private JButton answer2;
-    private JButton answer3;
-    private JButton answer4;
+    private Question currentQuestion;
+    private ArrayList<String> answers;
 
+    private JFrame frame;
+
+    private JLabel ans1;
+    private JLabel ans2;
+    private JLabel ans3;
+    private JLabel ans4;
+    private JLabel row_question;
+    private JLabel CorrectA;
+
+    private JLabel time;
+    private JLabel round;
     private JLabel question;
-    private JLabel label1;
-    private JLabel label2;
-    private JLabel label3;
-    private JLabel label4;
-
-    private JLabel rowRounds;
-    private JLabel rowQuestion;
-    private JLabel CurrentName;
-    private JLabel Points1;
 
     private BufferedImage img;
-    private JLabel image;
+    private JLabel photo;
+    private ImageIcon icon;
 
-    private String row_question;
-    private int number_rounds;
-    private int number_questRound;
-    private int currentAnswer;
-    private int roundCounter;
-    private int questionCounter;
+//    private int currentAnswer;
+//    private int roundCounter;
+//    private int questionCounter;
 
 
     public Stopwatch(Player p1 , Player p2 , int numRounds , int questRounds) throws IOException, InterruptedException {
@@ -47,45 +53,21 @@ public class Stopwatch {
         this.pl2 = p2;
         this.number_rounds = numRounds;
         this.number_questRound = questRounds;
-
         Game();
     }
 
 
     private void Game () throws IOException, InterruptedException {
+        frame = new JFrame("Game mode: Stopwatch");
+        frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setSize(800 , 500);
+        frame.setLayout(null);
 
-        //################################ Κυριο Frame ####################
-        Stopwatch = new JFrame("Game mode : Stopwatch");
-        Stopwatch.setDefaultCloseOperation(Stopwatch.EXIT_ON_CLOSE);
-        Stopwatch.setResizable(false);
-        Stopwatch.setSize(800 , 500);
-
-        //################################################################
-
-        panel = new JPanel();
-        panel.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        image = new JLabel();
-        //image.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        //################################# Φορτωση εικονας ##############
-        img = ImageIO.read(new File("images/bg2.jpg"));
-        ImageIcon icon = new ImageIcon(img);
-        image.setIcon(icon);
-        panel.add(image);
-        Stopwatch.add(panel);
-
-        //################################################################
-
-        //############################### Labels #########################
-//        GameSingle();
-        question = new JLabel("erwthsh");  //Ερωτηση
-        label1 = new JLabel();  //Απαντηση
-        label2 = new JLabel();  //Απαντηση
-        label3 = new JLabel();  //Απαντηση
-        label4 = new JLabel();  //Απαντηση
-
-        //################################################################
+        icon = new ImageIcon(ImageIO.read(new File("images/bg2.jpg")));
+        photo = new JLabel(icon);
+        photo.setSize(800 , 500);
+        frame.add(photo);
 
 
         if(pl2.getName() == "null") {
@@ -95,106 +77,186 @@ public class Stopwatch {
             GameMulti();
         }
 
-        Stopwatch.setVisible(true);
-        panel.setVisible(true);
-
     }
 
     private void GameSingle() throws InterruptedException {
+        answers = new ArrayList<>();
 
-        image.setLayout(null);
+        round = new JLabel();
+        question = new JLabel();
+        row_question = new JLabel();
+        CorrectA = new JLabel();
 
+        ans1 = new JLabel();
+        ans2 = new JLabel();
+        ans3 = new JLabel();
+        ans4 = new JLabel();
+
+        time = new JLabel();
+        time.setBounds(370 , 55 , 100 , 20);
+        time.setForeground(Color.WHITE);
+        time.setFont(new Font("timer" , Font.PLAIN , 20));
+        Timer timer;
+
+
+        frame.setVisible(true);
         Questions questions = new Questions();
         ArrayList<Question> roundQuestions;
-        Question currentQuestion;
 
-        roundCounter = 1;
-        questionCounter = 1;
-        rowRounds = new JLabel();
-        rowQuestion = new JLabel();
-        CurrentName = new JLabel();
-        Points1 = new JLabel();
-
-        CurrentName.setText("Name: " + pl1.getName());
-        CurrentName.setForeground(Color.GRAY);
-        CurrentName.setBounds(380 , 10 , 80 , 20);
-        image.add(CurrentName);
+        int roundCounter = 1;
 
         for(int i=0 ; i<number_rounds ; i++) {
-            rowRounds.setText("Round : " + roundCounter);
-            rowRounds.setForeground(Color.GRAY);
-            rowRounds.setBounds(100 , 10 , 80 , 20);
-
-
-
-            image.add(rowRounds);
-            roundCounter ++;
             roundQuestions = questions.getQuestions(number_questRound);
+            round.setText("Round: " + roundCounter);
+            round.setBounds(360 , 5 , 200 , 30);
+            round.setForeground(Color.WHITE);
+            round.setFont(new Font("ROUND" , Font.PLAIN , 25));
+            photo.add(round);
+            photo.updateUI();
+            TimeUnit.SECONDS.sleep(3);
+            //photo.remove(round);
+            photo.updateUI();
+            roundCounter++;
 
+            int questCounter = 1;
             for(int j=0 ; j<number_questRound ; j++) {
-                rowQuestion.setText("Question: " +questionCounter);
-                rowQuestion.setForeground(Color.GRAY);
-                rowRounds.setBounds(320 , 10 , 80 , 20);
-                image.add(rowRounds);
+                key1 = 0;
 
-                Points1.setText("Points" + pl1.getPoints());
-                Points1.setForeground(Color.GRAY);
-                Points1.setBounds(370 , 250 , 100 , 20);
-                Points1.setFont(new Font("Serif", Font.PLAIN, 30));
-                image.add(Points1);
-                TimeUnit.SECONDS.sleep(3);
-                image.remove(Points1);
+                question.setText("Question: " + questCounter);
+                question.setBounds(350 , 30 , 200 , 25);
+                question.setForeground(Color.WHITE);
+                question.setFont(new Font("QUEST" , Font.PLAIN , 25));
+                photo.add(question);
+                photo.updateUI();
+                //TimeUnit.SECONDS.sleep(3);
+                //photo.remove(question);
+                photo.updateUI();
+                questCounter++;
 
                 currentQuestion = roundQuestions.get(j);
+                String currentQ = currentQuestion.printQuestion();     //pairnw erwthsh
+                answers = currentQuestion.printAnswers();       //pairnw apanthseis
+
+                row_question.setText(currentQuestion.printQuestion());
+                row_question.setBounds(390 - currentQ.length()*6 , 100 , 800 , 30);
+                row_question.setForeground(Color.WHITE);
+                row_question.setFont(new Font("QUEST" , Font.PLAIN , 25));
+                photo.add(row_question);
 
 
+                ans1.setText("1: " + answers.get(0));
+                ans1.setBounds(150 , 210 , 300 , 30);
+                ans1.setForeground(Color.WHITE);
+                ans1.setFont(new Font("ANS" , Font.PLAIN , 20));
+                photo.add(ans1);
+                //photo.updateUI();
 
+                ans2.setText("2: " + answers.get(1));
+                ans2.setBounds(500 , 210 , 300 , 30);
+                ans2.setForeground(Color.WHITE);
+                ans2.setFont(new Font("ANS" , Font.PLAIN , 20));
+                photo.add(ans2);
+                //photo.updateUI();
+
+                ans3.setText("3: " + answers.get(2));
+                ans3.setBounds(150 , 260 , 300 , 30);
+                ans3.setForeground(Color.WHITE);
+                ans3.setFont(new Font("ANS" , Font.PLAIN , 20));
+                photo.add(ans3);
+                //photo.updateUI();
+
+                ans4.setText("4: " + answers.get(3));
+                ans4.setBounds(500 , 260 , 300 , 30);
+                ans4.setForeground(Color.WHITE);
+                ans4.setFont(new Font("ANS" , Font.PLAIN , 20));
+                photo.add(ans4);
+                //photo.updateUI();
+
+                countDown = 10;
+                timer = new Timer(1000, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        countDown --;
+
+                        if (countDown >= 0) {
+                            time.setText("Time: " + countDown + "sec");
+                        }
+                        else {
+                            ((Timer) (e.getSource())).stop();
+                        }
+
+                    }
+                });
+
+                photo.add(time);
+                timer.setInitialDelay(0);
+                timer.start();
+                photo.updateUI();
+
+
+//                Question finalCurrentQuestion = currentQuestion;
+//                Question finalCurrentQuestion1 = currentQuestion;
+                frame.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {}
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        int k= e.getKeyCode();
+                        if(k - 48 <= 4) {
+                            key1 = k - 48;
+                        }
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {}
+                });
+                while (countDown >= 0) {
+                    TimeUnit.SECONDS.sleep(1);
+                    if(key1 != 0) {
+                        break;
+                    }
+                }
+
+                if(key1 == currentQuestion.getCorrectAnswer()) {
+                    pl1.addPoints(1000);
+                }
+                else if(key1 != currentQuestion.getCorrectAnswer()) {
+                    pl1.addPoints(-1000);
+                }
+
+                photo.removeAll();
+                photo.updateUI();
+
+                CorrectA.setBounds(350 , 50 , 250 , 30);
+                CorrectA.setFont(new Font("CORRECT" , Font.PLAIN , 25));
+                CorrectA.setForeground(Color.WHITE);
+                int a = currentQuestion.getCorrectAnswer();
+                System.out.println(a);
+                CorrectA.setText("" + answers.get(a-1));
+                photo.add(CorrectA);
+                photo.updateUI();
+
+
+                TimeUnit.SECONDS.sleep(5);
+                photo.removeAll();
             }
 
+            System.out.println(pl1.getPoints());
+            frame.setVisible(true);
         }
-
-
-
-        row_question = "ERWTHSH";  //erwthsh apo arraylist (Quesiton)
-        question.setText(row_question);
-        question.setBounds(400 - row_question.length()*6 , 30 , row_question.length()*100 , 20);
-        question.setFont(new Font("Serif", Font.PLAIN, 20));
-        question.setForeground(Color.GRAY);
-
-        image.add(question);
-
-
-
-
-
-        System.out.println(Stopwatch.getWidth());
-
-
-        label1 = new JLabel("APANTHSH 1");
-        image.setFont(null);
-        image.setLayout(null);
-        label1.setBounds(100 , 200 , 150 , 30);
-
-        //label1.setFont(new Font("ans1" , Font.PLAIN , 15));
-        image.add(label1);
-
-        label2 = new JLabel("APANTHSH 2");
-        label3 = new JLabel("APANTHSH 3");
-        label4 = new JLabel("APANTHSH 4");
-
-
-
-
     }
 
     private void GameMulti() {
 
-
-
     }
 
-    private void KeyPressed(KeyEvent e) {
+    public static void main(String[] args) throws IOException, InterruptedException {
+        Player pl1 = new Player();
+        Player pl2 = new Player();
+        pl1.setName("george");
+        pl2.setName("null");
 
+        new Stopwatch(pl1 , pl2 , 2 , 2);
     }
-
 }
