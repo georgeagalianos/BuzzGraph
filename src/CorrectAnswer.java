@@ -32,11 +32,7 @@ public class CorrectAnswer {
     private ImageIcon icon;
 
     private JLabel row_question;
-
-
-    //##       for Answers
     private JLabel CorrectA;
-
     private JLabel ans1;
     private JLabel ans2;
     private JLabel ans3;
@@ -46,10 +42,7 @@ public class CorrectAnswer {
     private JLabel question;
     private JLabel points;
 
-    //###
-
     public CorrectAnswer(Player player1 , Player player2 , int number_rounds, int number_questRound) throws IOException, InterruptedException {
-        //super();
         this.pl1 = player1;
         this.pl2 = player2;
         this.number_rounds = number_rounds;
@@ -63,7 +56,7 @@ public class CorrectAnswer {
         photo.setSize(800 , 500);
 
 
-        frame = new JFrame("Correct Answer");
+        frame = new JFrame("Game mode: Correct Answer");
         frame.add(photo);
         frame.setSize(800 , 500);
         frame.setResizable(false);
@@ -77,14 +70,161 @@ public class CorrectAnswer {
         else {
             GameMulti();
         }
+    }
 
-//        button1 = new JButton("koumpi 1");        //leitourgei
-//        button1.setForeground(Color.WHITE);
-//        button1.setBounds(100 , 100 , 50 , 50);
-//
-//        photo.add(button1);
+    private void GameSignle() throws InterruptedException {
+        answers = new ArrayList<>();
 
-        //Game();
+        round = new JLabel();
+        question = new JLabel();
+        points = new JLabel();
+        row_question = new JLabel();
+        CorrectA = new JLabel();
+
+        ans1 = new JLabel();
+        ans2 = new JLabel();
+        ans3 = new JLabel();
+        ans4 = new JLabel();
+
+
+        frame.setVisible(true);
+        Questions questions = new Questions();
+        ArrayList<Question> roundQuestions;
+//        Question currentQuestion;
+//        currentQuestion = new Question();
+
+        //from program
+        int roundCounter = 1;
+        for(int i=0 ; i<number_rounds ; i++) {
+            roundQuestions = questions.getQuestions(number_questRound);
+            round.setText("Round: " + roundCounter);
+            round.setBounds(360 , 20 , 200 , 30);
+            round.setForeground(Color.WHITE);
+            round.setFont(new Font("ROUND" , Font.PLAIN , 25));
+            photo.add(round);
+            photo.updateUI();
+            TimeUnit.SECONDS.sleep(3);
+            //photo.remove(round);
+            photo.updateUI();
+            roundCounter++;
+
+            //from program
+            int questCounter = 1;
+            for(int j=0 ; j<number_questRound ; j++) {
+                flag1 = false;
+                key1 = 0;
+
+                question.setText("Question: " + questCounter);
+                question.setBounds(350 , 50 , 200 , 30);
+                question.setForeground(Color.WHITE);
+                question.setFont(new Font("QUEST" , Font.PLAIN , 25));
+                photo.add(question);
+                photo.updateUI();
+                //TimeUnit.SECONDS.sleep(3);
+                //photo.remove(question);
+                photo.updateUI();
+                questCounter++;
+
+                //points edw
+
+                //######################
+
+                currentQuestion = roundQuestions.get(j);
+                String currentQ = currentQuestion.printQuestion();     //pairnw erwthsh
+                answers = currentQuestion.printAnswers();       //pairnw apanthseis
+
+                row_question.setText(currentQuestion.printQuestion());
+                row_question.setBounds(390 - currentQ.length()*6 , 100 , 800 , 30);
+                row_question.setForeground(Color.WHITE);
+                row_question.setFont(new Font("QUEST" , Font.PLAIN , 25));
+                photo.add(row_question);
+
+
+                ans1.setText("1: " + answers.get(0));
+                ans1.setBounds(150 , 210 , 300 , 30);
+                ans1.setForeground(Color.WHITE);
+                ans1.setFont(new Font("ANS" , Font.PLAIN , 20));
+                photo.add(ans1);
+                //photo.updateUI();
+
+                ans2.setText("2: " + answers.get(1));
+                ans2.setBounds(500 , 210 , 300 , 30);
+                ans2.setForeground(Color.WHITE);
+                ans2.setFont(new Font("ANS" , Font.PLAIN , 20));
+                photo.add(ans2);
+                //photo.updateUI();
+
+                ans3.setText("3: " + answers.get(2));
+                ans3.setBounds(150 , 260 , 300 , 30);
+                ans3.setForeground(Color.WHITE);
+                ans3.setFont(new Font("ANS" , Font.PLAIN , 20));
+                photo.add(ans3);
+                //photo.updateUI();
+
+                ans4.setText("4: " + answers.get(3));
+                ans4.setBounds(500 , 260 , 300 , 30);
+                ans4.setForeground(Color.WHITE);
+                ans4.setFont(new Font("ANS" , Font.PLAIN , 20));
+                photo.add(ans4);
+                photo.updateUI();
+
+
+//                Question finalCurrentQuestion = currentQuestion;
+//                Question finalCurrentQuestion1 = currentQuestion;
+                frame.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        int k = 0;
+                        k = e.getKeyCode();
+                        if(k - 48 <= 4) {
+                            key1 = k - 48;
+//                            if(k - 48 == currentQuestion.getCorrectAnswer()) {
+//                                flag1 = true;
+//                            }
+                        }
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+
+                    }
+                });
+                while (key1 == 0) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+
+                if(key1 == currentQuestion.getCorrectAnswer()) {
+                    pl1.addPoints(1000);
+                }
+                else if(key1 != currentQuestion.getCorrectAnswer()) {
+                    pl1.addPoints(-1000);
+                }
+
+                photo.removeAll();
+                photo.updateUI();
+
+                CorrectA.setBounds(350 , 50 , 250 , 30);
+                CorrectA.setFont(new Font("CORRECT" , Font.PLAIN , 25));
+                CorrectA.setForeground(Color.WHITE);
+                int a = currentQuestion.getCorrectAnswer();
+                System.out.println(a);
+                CorrectA.setText("" + answers.get(a-1));
+                photo.add(CorrectA);
+                photo.updateUI();
+
+
+                TimeUnit.SECONDS.sleep(5);
+                photo.removeAll();
+
+            }
+        }
+        System.out.println(pl1.getPoints());
+        frame.setVisible(true);
     }
 
     private void GameMulti() throws InterruptedException {
@@ -260,172 +400,11 @@ public class CorrectAnswer {
         frame.setVisible(true);
     }
 
-
-
-    private void GameSignle() throws InterruptedException {
-        answers = new ArrayList<>();
-
-        round = new JLabel();
-        question = new JLabel();
-        points = new JLabel();
-        row_question = new JLabel();
-        CorrectA = new JLabel();
-
-        ans1 = new JLabel();
-        ans2 = new JLabel();
-        ans3 = new JLabel();
-        ans4 = new JLabel();
-
-
-        frame.setVisible(true);
-        Questions questions = new Questions();
-        ArrayList<Question> roundQuestions;
-//        Question currentQuestion;
-//        currentQuestion = new Question();
-
-        //from program
-        int roundCounter = 1;
-        System.out.println("round");
-        for(int i=0 ; i<number_rounds ; i++) {
-            roundQuestions = questions.getQuestions(number_questRound);
-            round.setText("Round: " + roundCounter);
-            round.setBounds(360 , 20 , 200 , 30);
-            round.setForeground(Color.WHITE);
-            round.setFont(new Font("ROUND" , Font.PLAIN , 25));
-            photo.add(round);
-            photo.updateUI();
-            TimeUnit.SECONDS.sleep(3);
-            //photo.remove(round);
-            photo.updateUI();
-            roundCounter++;
-
-            //from program
-            int questCounter = 1;
-            for(int j=0 ; j<number_questRound ; j++) {
-                flag1 = false;
-                flag2 = false;
-                key1 = 0;
-
-                question.setText("Question: " + questCounter);
-                question.setBounds(350 , 50 , 200 , 30);
-                question.setForeground(Color.WHITE);
-                question.setFont(new Font("QUEST" , Font.PLAIN , 25));
-                photo.add(question);
-                photo.updateUI();
-                //TimeUnit.SECONDS.sleep(3);
-                //photo.remove(question);
-                photo.updateUI();
-                questCounter++;
-
-                //points edw
-
-                //######################
-
-                currentQuestion = roundQuestions.get(j);
-                String currentQ = currentQuestion.printQuestion();     //pairnw erwthsh
-                answers = currentQuestion.printAnswers();       //pairnw apanthseis
-
-                row_question.setText(currentQuestion.printQuestion());
-                row_question.setBounds(390 - currentQ.length()*6 , 100 , 800 , 30);
-                row_question.setForeground(Color.WHITE);
-                row_question.setFont(new Font("QUEST" , Font.PLAIN , 25));
-                photo.add(row_question);
-
-
-                ans1.setText("1: " + answers.get(0));
-                ans1.setBounds(150 , 210 , 300 , 30);
-                ans1.setForeground(Color.WHITE);
-                ans1.setFont(new Font("ANS" , Font.PLAIN , 20));
-                photo.add(ans1);
-                //photo.updateUI();
-
-                ans2.setText("2: " + answers.get(1));
-                ans2.setBounds(500 , 210 , 300 , 30);
-                ans2.setForeground(Color.WHITE);
-                ans2.setFont(new Font("ANS" , Font.PLAIN , 20));
-                photo.add(ans2);
-                //photo.updateUI();
-
-                ans3.setText("3: " + answers.get(2));
-                ans3.setBounds(150 , 260 , 300 , 30);
-                ans3.setForeground(Color.WHITE);
-                ans3.setFont(new Font("ANS" , Font.PLAIN , 20));
-                photo.add(ans3);
-                //photo.updateUI();
-
-                ans4.setText("4: " + answers.get(3));
-                ans4.setBounds(500 , 260 , 300 , 30);
-                ans4.setForeground(Color.WHITE);
-                ans4.setFont(new Font("ANS" , Font.PLAIN , 20));
-                photo.add(ans4);
-                photo.updateUI();
-
-
-//                Question finalCurrentQuestion = currentQuestion;
-//                Question finalCurrentQuestion1 = currentQuestion;
-                frame.addKeyListener(new KeyListener() {
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-
-                    }
-
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                        int k = 0;
-                        k = e.getKeyCode();
-                        if(k - 48 <= 4) {
-                            key1 = k - 48;
-                            if(k - 48 == currentQuestion.getCorrectAnswer()) {
-                                flag1 = true;
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-
-                    }
-                });
-                while (key1 == 0) {
-                    TimeUnit.SECONDS.sleep(1);
-                }
-
-                if(key1 == currentQuestion.getCorrectAnswer()) {
-                    pl1.addPoints(1000);
-                }
-                else if(key1 != currentQuestion.getCorrectAnswer()) {
-                    pl1.addPoints(-1000);
-                }
-
-                photo.removeAll();
-                photo.updateUI();
-
-                CorrectA.setBounds(350 , 50 , 250 , 30);
-                CorrectA.setFont(new Font("CORRECT" , Font.PLAIN , 25));
-                CorrectA.setForeground(Color.WHITE);
-                int a = currentQuestion.getCorrectAnswer();
-                System.out.println(a);
-                CorrectA.setText("" + answers.get(a-1));
-                photo.add(CorrectA);
-                photo.updateUI();
-
-
-                TimeUnit.SECONDS.sleep(5);
-                photo.removeAll();
-
-            }
-        }
-        System.out.println(pl1.getPoints());
-        frame.setVisible(true);
-    }
-
-
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Player pl1 = new Player();
-        Player pl2 = new Player();
-        pl1.setName("george");
-        pl2.setName("null");
-
-        new CorrectAnswer(pl1 , pl2 , 2 , 2);
-    }
-}
+//    public static void main(String[] args) throws IOException, InterruptedException {
+//        Player pl1 = new Player();
+//        Player pl2 = new Player();
+//        pl1.setName("g");
+//        pl2.setName("null");
+//
+//        new CorrectAnswer(pl1 , pl2 , 2 , 2);
+//    }
