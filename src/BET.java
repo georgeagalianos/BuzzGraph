@@ -29,7 +29,7 @@ public class BET  {
 
     private ImageIcon img;
 
-    public BET(Player player1,Player player2, int numRounds, int numQuestions)throws IOException,InterruptedException{
+    public BET(Player player1 , Player player2 , int numRounds , int numQuestions)throws IOException,InterruptedException{
         this.player1 = player1;
         this.player2 = player2;
         this.number_rounds = numRounds;
@@ -43,7 +43,7 @@ public class BET  {
         frame.setResizable(false);
         frame.setSize(800, 500);
 
-        img = new ImageIcon(ImageIO.read(new File("img.jpg")));
+        img = new ImageIcon(ImageIO.read(new File("images/bg2.jpg")));
         photo = new JLabel(img);
         photo.setSize(800 , 500);
         frame.add(photo);

@@ -62,6 +62,7 @@ public class CorrectAnswer {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
+        frame.setVisible(true);
 
 
         if(pl2.getName() == "null") {
@@ -408,3 +409,4 @@ public class CorrectAnswer {
 //
 //        new CorrectAnswer(pl1 , pl2 , 2 , 2);
 //    }
+}

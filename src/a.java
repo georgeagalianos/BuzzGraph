@@ -12,6 +12,8 @@ public class a {
     private JFrame f;
     private JPanel p;
 
+    private Menu a;
+
     private JButton button1;    //singleplayer
     private JButton button2;    //multiplayer
     private JButton enter;      //button with action listener
@@ -97,16 +99,17 @@ public class a {
                 name1.setVisible(false);
                 name2.setVisible(false);
                 enter.setVisible(false);
-                pl_name1 = name1.getText();
                 //pl_name2 = "null";
+                pl2 = new Player();
                 pl2.setName("null");
+
                 pl1 = new Player();
-                pl1.setName(pl_name1);
+                pl1.setName(name1.getText());
 
                 //pl_name2 = name2.getText();
                 //p.setVisible(false);
-                System.out.println(pl_name1);
-                //System.out.println(pl_name2);
+                System.out.println(pl1.getName());
+                System.out.println(pl2.getName());
 
 
                 rounds();
@@ -142,12 +145,12 @@ public class a {
                 name1.setVisible(false);
                 name2.setVisible(false);
                 enter.setVisible(false);
-                pl_name1 = name1.getText();
-                pl_name2 = name2.getText();
+
                 pl1 = new Player();
-                pl1.setName(pl_name1);
+                pl1.setName(name1.getText());
+
                 pl2 = new Player();
-                pl2.setName(pl_name2);
+                pl2.setName(name2.getText());
                 //p.setVisible(false);
                 System.out.println(pl1.getName());
                 System.out.println(pl2.getName());
@@ -214,13 +217,25 @@ public class a {
             public void actionPerformed(ActionEvent e) {
                 quests = Integer.parseInt(text.getText());
                 System.out.println(quests);
-                f.setVisible(false);
-                p.setVisible(false);
+                f.dispose();
+
 //                try {
-//                    CorrectAnswer game = new CorrectAnswer(pl1 , rounds , quests);
+//                    new Menu(pl1 , pl2 , rounds , quests);
 //                } catch (IOException ioException) {
 //                    ioException.printStackTrace();
 //                }
+//                try {
+//                    a = new Menu(pl1 , pl2 , rounds , quests);
+//                } catch (IOException ioException) {
+//                    ioException.printStackTrace();
+//                }
+                try {
+                    new CorrectAnswer(pl1 , pl2 , rounds , quests);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
             }
         });
 
